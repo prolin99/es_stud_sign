@@ -1,0 +1,106 @@
+<link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/tadtools/css/xoops_adm.css" />
+<script language='javascript' type='text/javascript' src='<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js'></script>
+
+
+<div class="row-fluid">
+    <form class="form-inline"  action="add_kind.php" method="post">
+    <fieldset>
+    <legend>新增報名表</legend>
+    <!--  報表名別  --> 
+    <div class="row-fluid">
+    	<div class="span6">
+		<div>
+    		<label>報名表名稱</label>
+    		<input type="text" name="doc_title" placeholder="報名表名稱" class='span8'>
+    		</div>
+    		
+ 		<div>
+    		<label  >舊樣版</label>
+		<{html_options name="old_templ" options=$data.kind  class='span8' }>
+		<button type="button" class="btn btn-info"  id="templ">套用</button>
+ 
+		</div>
+		
+ 		<div>
+     		<label>說 明：</label>
+     		</div>
+    		<textarea class="span10" rows="4"  name="txtDoc" placeholder="填表時說明內容 ..... "></textarea>
+    		
+    	</div>
+	
+    	<div class="span6">
+    		<span  class="label label-info" >填報時間設定</span>
+    		 <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='beg_date'  class='span3'   value="<{$data.beg_date}>" placeholder="指定開始日期">~
+    		  <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='end_date'  class='span3'   value="<{$data.end_date}>" placeholder="指定截止日期">
+    		 <br /> 
+    		 
+    		<span  class="label label-info" >填報年級限制</span> <br/>
+    		<{foreach  key=key item=grade   from=$data.grade }>
+    		<label class="checkbox">
+   		 <input type="checkbox" name="grade[<{$grade}>]"  value="<{$grade}>" class="grade_select" checked ><{$grade}>年級
+    		</label>
+    		<{/foreach}>
+    		
+    		<div>
+    		<span  class="label label-info" >人數限制</span>    <br/> 		
+     		<label>正取</label>
+			<input class="span1" name="txtGet"  type="text"  value="10" title="正取人數"  placeholder="正取人數">
+		<label>備取</label>	
+			<input class="span1" name="txtGetMore"   value="0" type="text" title="備取人數" placeholder="備取人數">    		
+		</div>	  
+		
+		<!--  擷取學生資料  --> 
+		<div  >
+			<span  class="label label-info" >一併匯出學生資料</span>    <br/>
+    			<{foreach  key=key item=stud   from=$DEF_SET.export }>
+    			<label class="checkbox">
+   		 	<input type="checkbox" name="stud[<{$key}>]"  value="<{$key}>"><{$stud}> 
+    			</label>
+    			<{/foreach }>
+     		</div>
+      </div>
+    
+ </div>    
+ 
+     
+     <!--  項目別  --> 
+     <h4  >新增自行輸入欄位</h4>   
+     <span class="help-block">如果需要額外的欄位資料，可以再自行增加，在填表時就會一併出現要求輸入！</span>
+    <div class="row-fluid  alert-success"  id="field">
+    	<div class="row-fluid" >
+ 	<span class="span1"><span class="label">代碼</span> </span>
+  	<span class="span2"><span class="label">欄名</span></span>
+	<span class="span1"><span class="label">格式</span></span>
+	<span class="span1"><span class="label">欄寬1~3</span></span>
+	<span class="span3"><span class="label">預設值</span></span>
+	</div>
+	<{section name=ti  start=1  loop=$DEF_SET.fields   step=1  }>
+	
+    	<div  class="row-fluid">
+ 	
+        <span class="span1"><span class="badge badge-info"><{$smarty.section.ti.index}></span>
+        <input class="span6" name="txtItem[]"   value="F<{$smarty.section.ti.index}>" type="text"   title="欄位代碼(英數)" placeholder="欄位代碼(英數)"> </span> 
+  	<span class="span2"><input class="span10" name="txtItemName[]" type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span> 
+  	<span class="span1">
+               <select class="span10" name="selI_Mode[]">
+                <option value="s">字串</option>
+                <option value="n">數字</option>
+                <option value="d">日期</option>
+              </select>	
+        </span>      
+        <span class="span1"><input class="span10" name="txtI_Width[]"  value="1" title="1~3" type="text">  </span>      
+	<span class="span3"><input class="span10" name="txtI_def[]" type="text"  title="預設值" placeholder="預設值">     </span> 
+	</div>
+ 	<{ /section }>
+ 	
+    </div>
+
+    <button type="submit" class="btn btn-primary" name='ADD' value='ADD'  >新增</button>
+    </fieldset>
+    </form>
+
+
+</div>
+

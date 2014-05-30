@@ -1,0 +1,114 @@
+<{$bootstrap}>
+<{$jquery}>
+<{$toolbar}>
+<script language='javascript' type='text/javascript' src='<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js'></script>
+
+<{if   $data.kind_in }>
+<!--     輸入                          -->
+<{foreach  key=key item=sign   from=$data.kind_in  }>
+ 
+<!-- <{$i++}> -->
+    <form>
+    <fieldset>
+    <legend>校園填報</legend>
+    <h3><{ $sign.title }> </h3>
+    <h4><{ $sign.doc }> </h4>
+    <!--  尚無輸入資料  -->
+    
+    <label>快速輸入區</label>
+    <input type="text" class="span5"  id="q_input"  placeholder="輸入學生座號，多人時以逗號或空白分隔">
+    
+    <!--    輸入欄         --------------------------------- -->
+    <h5>正取資料輸入</h5>
+	<{section name=ti  start=0  loop=$sign.stud_get   step=1  }>
+	
+    	<div  class="row-fluid">
+ 	
+        <span class="span2"><span class="badge badge-info"><{$i}></span>
+        <input class="span4" name="num_id[]"   value="" type="text"   title="座號" placeholder="座號"><span id="span_name_<{$i}>"></span> </span> 
+        <!--     需輸入欄         -->
+        <{foreach  key=key item=fi   from=$sign.field_input  }>
+        <{ if ($fi[2]=='d') }>
+        	<span class="span<{$fi[3]}>">
+        	<input class="span12 self_input" name="in_<{$fi[0]}>[]" type="text"  title="<{$fi[1]}>" placeholder="<{$fi[1]}>"  value="<{$fi[4]}>"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" mode="<{$fi[2]}>">
+        	</span>        
+        <{else}>
+        	<span class="span<{$fi[3]}>">
+        	<input class="span12 self_input" name="in_<{$fi[0]}>[]" type="text"  title="<{$fi[1]}>" placeholder="<{$fi[1]}>"  value="<{$fi[4]}>" mode="<{$fi[2]}>">
+        	</span>
+        <{/if}>	
+        <{/foreach}>
+        <!--     擷取欄         -->
+ 	<span class="span4"  id="get_<{$i}>">
+ 	
+        </span>
+        <input type='hidden' name='get_data[]'  id='get_data_<{$i}>'   >
+	</div>
+	<!-- <{$i++}> -->
+ 	<{ /section }>
+ 	
+    <!--    備取區         ------------------------------------------------------- -->
+    <{ if ($sign.stud_get_more) }>
+    <h5>備取資料輸入</h5>
+	<{section name=ti  start=0  loop=$sign.stud_get_more   step=1  }>
+	
+    	<div  class="row-fluid">
+ 	
+        <span class="span2"><span class="badge badge-info"><{$i}></span>
+        <input class="span4" name="num_id"   value="" type="text"   title="座號" placeholder="座號"><span id="span_name_<{$i}>"></span>  </span> 
+        <!--     需輸入欄         -->
+        <{foreach  key=key item=fi   from=$sign.field_input  }>
+        <{ if ($fi[2]=='d') }>
+        	<span class="span<{$fi[3]}>">
+        	<input class="span12 self_input" name="in_<{$fi[0]}>[]" type="text"  title="<{$fi[1]}>" placeholder="<{$fi[1]}>"  value="<{$fi[4]}>"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" mode="<{$fi[2]}>">
+        	</span>        
+        <{else}>
+        	<span class="span<{$fi[3]}>">
+        	<input class="span12 self_input" name="in_<{$fi[0]}>[]" type="text"  title="<{$fi[1]}>" placeholder="<{$fi[1]}>"  value="<{$fi[4]}>" mode="<{$fi[2]}>">
+        	</span>
+        <{/if}>	
+        <{/foreach}>
+        <!--     擷取欄         -->
+ 	<span class="span4"  id="get_<{$i}>">
+ 	
+        </span>
+        <input type='hidden' name='get_data[]'  id='get_data_<{$i}>'   >
+	</div>
+	<!-- <{$i++}> -->
+ 	<{ /section }>    
+    <{/if}>	
+    <button type="submit" class="btn btn-success">報名完成</button>
+    <button type="submit" class="btn btn-danger" name='Submit_emp' value='empt'  title="如果班上沒有學生符合或要參加，按下這鍵代表貴班已填報過了的記號。"  >班上沒有學生要報名</button>
+    </fieldset>
+    </form>
+ 
+<{/foreach}>
+
+
+
+<{else}>
+
+<!--     列出總表                            -->
+<{$i++}>
+<{foreach  key=key item=sign   from=$data.kind  }>
+<{if ($sign.cando) }>
+<div class="row-fluid  alert-success" >
+<span class="span1">
+ 
+<a class="btn btn-success" href="index.php?id=<{$sign.id}>" >報名</a>
+</span>
+<{ else }>
+<div class="row-fluid  alert-error" >
+<span class="span1">
+過期
+</span>
+<{/if}>
+
+<span class="span5"><div class="alert alert-info"><span class="badge badge-info"><{$i++}></span><{$sign.title}></div><{$sign.doc}><br /></span>
+<span class="span1"><{$sign.admin}></span>
+<span class="label label-info">還有 <{$sign.d_days}> 天</span>
+</div>
+<{/foreach}>
+
+
+<{/if}>
