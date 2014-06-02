@@ -13,16 +13,59 @@ include_once XOOPS_ROOT_PATH."/header.php";
 
 
 /*-----------function區--------------*/
- 
+
+ if ($_POST['ADD']=='add') {
+	//新增報名資料
+	
+	//要輸入的欄位名
+			$fi= preg_split("/##/" ,$_POST['input_data_item']) ;
+
+			foreach ($fi as $k => $v) {
+				if (trim($v)<>'')  {
+					list($fid,$ff1,$ff2,$ff3,$ff4)= preg_split("/__/" ,$v) ;
+					$input_field[] =  $fid ;
+				}	
+			}	
+			//var_dump($input_field) ; 
+			
+	foreach ($_POST['num_id'] as $k =>$v) {
+		if ($v) {
+			$input ='' ;
+			$update_id='' ;
+			foreach ($input_field as $ik =>$iv) {
+				$fn =  "in_".$iv ;
+				$input .= $iv."__" . $_POST[$fn][$k] .'##'  ;
+			}
+			//檢查有無存在
+			$sql ="	select id from  " . $xoopsDB->prefix("sign_data") ." where kind = '{$_POST['now_kind']}'  and class_id = '{$_POST['now_class']}'  and  order_pos = '$k' " ;
+			echo $sql ;
+			$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
+			while($row=$xoopsDB->fetchArray($result)){
+				 $update_id  = $row['id'] ;
+			}			
+			if ($update_id ) {
+				$sql =" UPDATE " . $xoopsDB->prefix("sign_data")  . "   SET  `stud_name`='$v' , `data_get`='{$_POST['get_data'][$k]}' ,`data_input`='$input' WHERE  id ='$update_id' " ;
+			}else {	
+				//新增
+				$sql ="	INSERT INTO  " . $xoopsDB->prefix("sign_data")  ." (  `kind`, `order_pos`, `stud_name`, `data_get`, `data_input`, `class_id`) 
+				VALUES ({$_POST['now_kind']},$k,'$v', '{$_POST['get_data'][$k]}'  ,'$input' , '{$_POST['now_class']}'   ) " ;
+			}
+			//echo $sql ."<br/>" ;
+			$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
+		}
+		
+	}	
+	
+ }	
 
 
- 
+
 
 /*-----------執行動作判斷區----------*/
  if  ( $_GET['id'] ) {
 	$id = $_GET['id'] ;
 	
- 
+ 	
 	//取得報名項目
 	$data['kind_in'] = get_sign_kind($id) ;
 	//var_dump($data['kind_in']) ;
@@ -60,7 +103,7 @@ include_once XOOPS_ROOT_PATH."/header.php";
 
  
 	//取得已填報資料
-	$data['class_input'] =  get_sign_data($id, $class_id) ;
+	$data['my_class'] =  get_sign_data($id, $class_id) ;
 	//
 	
 }else {	

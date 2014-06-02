@@ -164,7 +164,27 @@ function get_sign_data($kind_id, $class_id) {
  
 	$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
 	while($row=$xoopsDB->fetchArray($result)){
- 			$data[$row['id']] = $row ;
+			//輸入值
+			$fi= preg_split("/##/" ,$row['data_input']) ;
+ 
+			foreach ($fi as $k => $v) {
+				if (trim($v)<>'')  {
+					list($fn,$fv)= preg_split("/__/" ,$v) ;
+					$row['in_'.$fn] = $fv ;
+				}	
+			}		
+			//擷取欄
+			$show_data='' ;
+ 			$fi= preg_split("/,/" ,$row['data_get']) ;
+ 
+			foreach ($fi as $k => $v) {
+				if (trim($v)<>'')  {
+					list($fn,$fv)= preg_split("/:/" ,$v) ;
+					$show_data .= '<span class="label">'.$fv . '</span>';
+ 				}	
+			}	
+			$row['get_hide']="$show_data<input type='hidden' name='get_data[". $row['order_pos'] ."]'  id='get_data_".  $row['order_pos']  ."' value='" . $row['data_get'] ."'  > " ;
+ 			$data[$row['class_id']][$row['order_pos']] = $row ;
 	}	
 	return $data  ;		
 	
