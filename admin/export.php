@@ -16,20 +16,22 @@ require_once '../../tadtools/PHPExcel/IOFactory.php';
 
 /*-----------執行動作判斷區----------*/
 if  ($_GET['mid']) {
-	$month_id =$_GET['mid'] ;
-	//echo $month_id  ;
+	$mid =$_GET['mid'] ;
+	//echo $mid  ;
 	
-	//取得各班別資料
-	$grade_data=get_month_grade($month_id) ;
+	//取得報名表格式
+	$kind_get=get_sign_kind($mid) ;
+	$kind=$kind_get[$mid] ;
+	//var_dump($kind) ;
 	
  	//取得報名學生資料
- 	$sign_studs = get_as_signs($month_id , $class_id  , $grade_data ,1) ;
-
+ 	$sign_studs = get_sign_data($mid , 'all' ) ;
+	//var_dump($sign_studs) ;
 
  	$objPHPExcel = new PHPExcel();
 	$objPHPExcel->setActiveSheetIndex(0);  //設定預設顯示的工作表
 	$objActSheet = $objPHPExcel->getActiveSheet(); //指定預設工作表為 $objActSheet
-	$objActSheet->setTitle("課後照顧");  //設定標題	
+	$objActSheet->setTitle("校園報名");  //設定標題	
   	//設定框線
 	$objBorder=$objActSheet->getDefaultStyle()->getBorders();
 	$objBorder->getBottom()
@@ -42,32 +44,86 @@ if  ($_GET['mid']) {
        //標題行
       	$objPHPExcel->setActiveSheetIndex(0) 
             ->setCellValue('A' . $row, 'NO.')
-            ->setCellValue('B' . $row, '年級')
-            ->setCellValue('C' . $row, '原班')
-            ->setCellValue('D' . $row, '學生姓名')
-            ->setCellValue('E' . $row, '班別') 
-            ->setCellValue('F' . $row, '時段') 
-            ->setCellValue('G' . $row, '減免') 
-             ->setCellValue('H' . $row, '費用') 
-             ->setCellValue('I' . $row, '備註')            ;
-            
+            ->setCellValue('B' . $row, '班級')
+            ->setCellValue('C' . $row, '順位')
+            ->setCellValue('D' . $row, '學生姓名') ;
+      //擷取欄位
+      $col ='D' ;
 
- 	
+      foreach ($kind['field_get']  as $k=>$v) {
+		$col++ ;
+		$col_str =$col .$row ;
+		$mystr= $DEF_SET['export'][$v] ;
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str , $mystr) ;
+      }	
+ 
+      //輸入欄位
+      foreach ($kind['field_input']  as $k=>$v) {
+		$col++ ;
+		$col_str =$col .$row ;
+ 
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str , $v[1]) ;
+      }	      
+ 
+      //是否正取
+		$col++ ;
+		$col_str =$col .$row ;
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str , '錄取') ;      
+ 
+ 
         //資料區
-        foreach ( $sign_studs  as $stud_id => $stud )  {
-        	$row++ ;
-      	
-       		$objPHPExcel->setActiveSheetIndex(0)
-            		->setCellValue('A'.$row,$row-1)
-            		->setCellValue('B'.$row , $stud['grade_year'])
-            		->setCellValue('C'.$row ,$stud['class_id_base'])
-            		->setCellValue('D'.$row, $stud['stud_name'])
-            		->setCellValue('E'.$row, $AS_SET['class_set'][$stud['class_id']])
-            		->setCellValue('F'.$row, $AS_SET['time'][$stud['time_mode']])
-            		->setCellValue('G'.$row, $AS_SET['decrease_set'][$stud['spec']])
-            		->setCellValue('H'.$row, $stud['pay_sum'])
-            		->setCellValue('I'.$row, $stud['ps'])
-            		;
+        foreach ( $sign_studs  as $ci => $class_stud )  {
+		$stud_order=0 ;	//順位
+		foreach ( $class_stud  as $order => $stud )  {
+			$row++ ;
+			$stud_order++ ;
+			
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue('A'.$row,$row-1)
+				->setCellValue('B'.$row , $stud['class_id'])
+				->setCellValue('C'.$row ,$stud['order_pos'])
+				->setCellValue('D'.$row, $stud['stud_name']) ;
+			//擷取欄位
+			$col ='D' ;
+			
+			foreach ($kind['field_get']  as $k=>$v) {
+					$col++ ;
+					$col_str =$col .$row ;
+ 
+					$my_data= $stud['get_field_2'][$v] ;
+					
+ 
+					//日期格式
+					if ($v=='birthday'){
+						$b_date = preg_split("/[-\/]/",$stud['get_field_2'][$v]) ;
+						$my_data="=date({$b_date[0]}, {$b_date[1]}, {$b_date[2]}) "  ;
+ 					}
+ 
+					   $objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str , $my_data) ;
+  
+			}	
+			
+			//輸入欄位
+			foreach ($kind['field_input']  as $k=>$v) {
+					$col++ ;
+					$col_str =$col .$row ;
+					$my_data= $stud['in_'.$v[0]] ;
+					//日期格式
+					if ($v[2]=='d'){
+						$b_date = preg_split("/[-\/]/",$my_data) ;
+						$my_data="=date({$b_date[0]}, {$b_date[1]}, {$b_date[2]}) "  ;						
+					}
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str , $my_data) ;
+			}	
+			
+			//是否正取
+			$col++ ;
+			$col_str =$col .$row ;
+			if ($stud_order<= $kind['stud_get'])
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str , '正取') ;      
+			else 	
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str , '備取') ;      
+		}	
   
 	} 	
 

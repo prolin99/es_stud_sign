@@ -3,7 +3,8 @@
 <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/tadtools/css/xoops_adm.css" />
 <script language='javascript' type='text/javascript' src='<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js'></script>
 
-
+<{ if ( ! $data.edit_kind) }>
+<!----- 新增模式 -->
 <div class="row-fluid">
     <form class="form-inline"  action="add_kind.php" method="post">
     <fieldset>
@@ -19,7 +20,7 @@
  		<div>
     		<label  >舊樣版</label>
 		<{html_options name="old_templ" options=$data.kind  class='span8' }>
-		<button type="button" class="btn btn-info"  id="templ">套用</button>
+		<button type="submit" class="btn btn-info"  id="templ"  name='templ' value='templ' >套用</button>
  
 		</div>
 		
@@ -66,8 +67,8 @@
  
      
      <!--  項目別  --> 
-     <h4  >新增自行輸入欄位</h4>   
-     <span class="help-block">如果需要額外的欄位資料，可以再自行增加，在填表時就會一併出現要求輸入！</span>
+     <h4  >額外輸入欄位</h4>   
+     
     <div class="row-fluid  alert-success"  id="field">
     	<div class="row-fluid" >
  	<span class="span1"><span class="label">代碼</span> </span>
@@ -96,7 +97,7 @@
  	<{ /section }>
  	
     </div>
-
+    
     <button type="submit" class="btn btn-primary" name='ADD' value='ADD'  >新增</button>
     </fieldset>
     </form>
@@ -104,3 +105,111 @@
 
 </div>
 
+
+<{ else  }>
+<!----- 編修模式---------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<{foreach  key=key item=sign   from=$data.edit_kind  }>
+<div class="row-fluid">
+    <form class="form-inline"  action="add_kind.php" method="post">
+    <fieldset>
+    <legend>修改報名表</legend>
+    <!--  報表名別  --> 
+    <div class="row-fluid">
+    	<div class="span6">
+		<div>
+    		<label>報名表名稱</label>
+    		<input type="text" name="doc_title" placeholder="報名表名稱" value="<{$sign.title}>" class='span8'>
+    		</div>
+    		
+
+		
+ 		<div>
+     		<label>說 明：</label>
+     		</div>
+    		<textarea class="span10" rows="4"  name="txtDoc" placeholder="填表時說明內容 ..... "   ><{$sign.doc}></textarea>
+
+    	</div>
+	
+    	<div class="span6">
+    		<span  class="label label-info" >填報時間設定</span>
+    		 <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='beg_date'  class='span3'   value="<{$sign.beg_date}>" placeholder="指定開始日期">~
+    		  <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='end_date'  class='span3'   value="<{$sign.end_date}>" placeholder="指定截止日期">
+    		 <br /> 
+    		 
+    		<span  class="label label-info" >填報年級限制</span> <br/>
+    		<{foreach  key=key item=grade   from=$data.grade }>
+    		<label class="checkbox">
+   		 <input type="checkbox" name="grade[<{$grade}>]"  value="<{$grade}>" class="grade_select" 
+   		 <{ if $sign.grade[$grade] }> checked <{/if}>
+   		 ><{$grade}>年級
+    		</label>
+    		<{/foreach}>
+    		
+    		<div>
+    		<span  class="label label-info" >人數限制</span>    <br/> 		
+     		<label>正取</label>
+			<input class="span1" name="txtGet"  type="text"    title="正取人數"  placeholder="正取人數" value="<{$sign.stud_get}>" >
+		<label>備取</label>	
+			<input class="span1" name="txtGetMore"  type="text" title="備取人數" placeholder="備取人數"  value="<{$sign.stud_get_more}>">    		
+		</div>	  
+		
+		<!--  擷取學生資料  --> 
+		<div  >
+			<span  class="label label-info" >一併匯出學生資料</span>    <br/>
+    			<{foreach  key=key item=stud   from=$DEF_SET.export }>
+    			<label class="checkbox">
+   		 	<input type="checkbox" name="stud[<{$key}>]"  value="<{$key}>"  
+   		 		<{ if $sign.field_get[$key] }> checked  <{/if}>
+   		 	><{$stud}> 
+    			</label>
+    			<{/foreach }>
+     		</div>
+      </div>
+    
+ </div>    
+ 
+     
+     <!--  項目別  --> 
+     <h4  >額外輸入欄位</h4>   
+    <div class="row-fluid  alert-success"  id="field">
+    	<div class="row-fluid" >
+ 	<span class="span1"><span class="label">代碼</span> </span>
+  	<span class="span2"><span class="label">欄名</span></span>
+	<span class="span1"><span class="label">格式</span></span>
+	<span class="span1"><span class="label">欄寬1~3</span></span>
+	<span class="span3"><span class="label">預設值</span></span>
+	</div>
+	<{section name=ti  start=1  loop=$DEF_SET.fields   step=1  }>
+	<{assign var="nti" value=$smarty.section.ti.index }>
+    	<div  class="row-fluid">
+ 	
+        <span class="span1"><span class="badge badge-info"><{$nti}></span>
+        <input class="span6" name="txtItem[]"   value="<{$sign.field_input[$nti][0]}>" type="text"   title="欄位代碼(英數)" placeholder="欄位代碼(英數)"> </span> 
+  	<span class="span2"><input class="span10"  name="txtItemName[]"  value="<{$sign.field_input[$nti][1] }>"  type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span> 
+  	<span class="span1">
+               <select class="span10" name="selI_Mode[]">
+                <option value="s"  <{ if ($sign.field_input[$nti][2]=='s') }>selected <{/if}> >字串</option>
+                <option value="n" <{ if ($sign.field_input[$nti][2]=='n') }>selected <{/if}>>數字</option>
+                <option value="d" <{ if ($sign.field_input[$nti][2]=='d') }>selected <{/if}>>日期</option>
+              </select>	
+        </span>      
+        <span class="span1"><input class="span10" name="txtI_Width[]"  value="<{$sign.field_input[$nti][3]}>" title="1~3" type="text">  </span>      
+	<span class="span3"><input class="span10" name="txtI_def[]" type="text"  value="<{$sign.field_input[$nti][4]}>" title="預設值" placeholder="預設值">     </span> 
+	</div>
+ 	<{ /section }>
+ 	
+    </div>
+    <div class="alert alert-block"><h4>注意!</h4>開始報名後，再修改額外欄位，先前報名者需再修正資料，否則可能造成資料不完整的情形！</div>	
+	<input type='hidden' name='okind_id'   value='<{$sign.id }>'  >
+    <button type="submit" class="btn btn-primary" name='ADD' value='edit'  >修改</button>
+    <button type="submit" class="btn btn-danger" name='btn_del' value='del'  onclick='return confirm("確定要刪除?")'  >刪除</button>
+    <button type="submit" class="btn btn-warning" name='btn_clear' value='clear'  onclick='return confirm("確定要清空報名資料?")'   >清空報名資料</button>
+    </fieldset>
+    </form>
+
+
+</div>
+<{/foreach}>
+
+
+<{ /if }>

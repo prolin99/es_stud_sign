@@ -39,7 +39,7 @@ $modversion['tables'][2] = "sign_data";
 //---管理介面設定---//
 $modversion['hasAdmin'] = 1;
 $modversion['adminindex'] = "admin/index.php";
-$modversion['adminmenu'] = "admin/menu.php";
+$modversion['adminmenu'] = "admin/menu.php"; 	 	 		
  
 //---使用者主選單設定---//
 $modversion['hasMain'] = 1;
@@ -57,14 +57,21 @@ $modversion['templates'][$i]['description'] = 'esss_index_add_tpl.html';
 $i++ ;
 $modversion['templates'][$i]['file'] = 'esss_index_adm_tpl.html';
 $modversion['templates'][$i]['description'] = 'esss_index_adm_tpl.html';
+
+ 
+ $i++ ;
+$modversion['templates'][$i]['file'] = ' esss_adm_alllist_tpl.html';
+$modversion['templates'][$i]['description'] = ' esss_adm_alllist_tpl.html';
  
 $i=0 ;
 //偏好設定
 $i++ ;
+//預設額外欄位數
 $modversion['config'][$i]['name'] = 'es_ss_field_num';
 $modversion['config'][$i]['title']   = '_MI_ES_SS_CONFIG_T1';
 $modversion['config'][$i]['description'] = '_MI_ES_SS_CONFIG_D1';
 $modversion['config'][$i]['formtype']    = 'textbox';
 $modversion['config'][$i]['valuetype']   = 'text';
 $modversion['config'][$i]['default'] ="4" ;
+ 
 ?>

@@ -1,7 +1,7 @@
 <?php
 //  ------------------------------------------------------------------------ //
 // 本模組由 prolin 製作
-// 製作日期：2014-03-01
+// 製作日期：2014-06-01
 // $Id:$
 // ------------------------------------------------------------------------- //
 /*-----------引入檔案區--------------*/
@@ -26,10 +26,20 @@ include_once XOOPS_ROOT_PATH."/header.php";
 					$input_field[] =  $fid ;
 				}	
 			}	
-			//var_dump($input_field) ; 
-			
-	foreach ($_POST['num_id'] as $k =>$v) {
+
+ 
+	for ($k =1 ; $k<= ($_POST['studs_get']+ $_POST['studs_more']) ; $k++) 	{
+		//正取、備取人數
+		$v = $_POST['num_id'][$k] ;
 		if ($v) {
+			//如果是座號(未轉換成姓名....等) 
+			if ($v>0) {
+				$stud_get_array = get_student_data_array($_POST['now_class'] ,$v , 'ii_0' , $_POST['get_data_item'] ) ;
+				$v=$stud_get_array['name'] ;
+				$_POST['get_data'][$k] = $stud_get_array['hide_data'] ; 
+				//echo  $stud_get_array['hide_data'] ;  
+			}
+			
 			$input ='' ;
 			$update_id='' ;
 			foreach ($input_field as $ik =>$iv) {
@@ -38,7 +48,6 @@ include_once XOOPS_ROOT_PATH."/header.php";
 			}
 			//檢查有無存在
 			$sql ="	select id from  " . $xoopsDB->prefix("sign_data") ." where kind = '{$_POST['now_kind']}'  and class_id = '{$_POST['now_class']}'  and  order_pos = '$k' " ;
-			echo $sql ;
 			$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
 			while($row=$xoopsDB->fetchArray($result)){
 				 $update_id  = $row['id'] ;
@@ -50,18 +59,38 @@ include_once XOOPS_ROOT_PATH."/header.php";
 				$sql ="	INSERT INTO  " . $xoopsDB->prefix("sign_data")  ." (  `kind`, `order_pos`, `stud_name`, `data_get`, `data_input`, `class_id`) 
 				VALUES ({$_POST['now_kind']},$k,'$v', '{$_POST['get_data'][$k]}'  ,'$input' , '{$_POST['now_class']}'   ) " ;
 			}
-			//echo $sql ."<br/>" ;
+ 
 			$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
-		}
+		}else {
+			//移除空白
+			$sql =  "  DELETE    FROM " . $xoopsDB->prefix("sign_data") .  " where kind ='{$_POST['now_kind']}'  and class_id = '{$_POST['now_class']}'  and  order_pos = '$k'     "  ;
+ 			$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
+		}	
+		
 		
 	}	
 	
  }	
 
-
+if ($_POST['Submit_emp'] =='empt') {
+	//無學生要報名
+	$sql ="	select id from  " . $xoopsDB->prefix("sign_data") ." where kind = '{$_POST['now_kind']}'  and class_id = '{$_POST['now_class']}'    " ;
+	$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
+	while($row=$xoopsDB->fetchArray($result)){
+				 $update_id  = $row['id'] ;
+	}			
+	if ( !$update_id ) {
+		//無資料才寫入
+		$sql ="	INSERT INTO  " . $xoopsDB->prefix("sign_data")  ." (  `kind`, `order_pos`,  `class_id`) 
+			VALUES ({$_POST['now_kind']}, '-99' , '{$_POST['now_class']}'   ) " ;	
+		$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
+	}	
+	
+}	
 
 
 /*-----------執行動作判斷區----------*/
+
  if  ( $_GET['id'] ) {
 	$id = $_GET['id'] ;
 	
@@ -69,12 +98,10 @@ include_once XOOPS_ROOT_PATH."/header.php";
 	//取得報名項目
 	$data['kind_in'] = get_sign_kind($id) ;
 	//var_dump($data['kind_in']) ;
+
  	//取得任教班級
 	$class_id = get_my_class_id() ;
- 
-
- 
-	
+/*		
 	if ($isAdmin){
 	  	//管理者可以選取多班
 		$data['admin'] = true ;
@@ -86,15 +113,14 @@ include_once XOOPS_ROOT_PATH."/header.php";
 
 		//班級名稱列表
 		$data['class_list']=get_class_list() ;
-		//$data['month_data']['cando'] =1 ;
+
 	}	
-	
+*/	
 	//判別是否在填報年級
 	$grade = substr($class_id,0,1) ;
-	if  ( strrchr(  $data['kind']['input_classY']  , $grade) )  
-		$date['class_can_fg'] = true ;
-	else 
-		$date['class_can_fg'] = false ;
+ 
+	if  ( ! in_array($grade , $data['kind_in'][$id]['grade']) )  
+ 		 redirect_header("index.php",3, "貴班無需填報");
 		
 	//取得現在班級姓名
 	$data['class_stud']=get_class_students($class_id) ;

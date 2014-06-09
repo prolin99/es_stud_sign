@@ -11,9 +11,9 @@ $adminmenu[$i]['desc'] = '報名管理' ;
 $adminmenu[$i]['icon'] = 'images/admin/home.png' ;
 
 $i++ ;
-$adminmenu[$i]['title'] = "新增報名";
+$adminmenu[$i]['title'] = "增修報名表";
 $adminmenu[$i]['link'] = "admin/add_kind.php";
-$adminmenu[$i]['desc'] = '新增報名';
+$adminmenu[$i]['desc'] = '增修報名表';
 $adminmenu[$i]['icon'] = 'images/admin/about.png';
 
 $i++ ;

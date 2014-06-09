@@ -1,18 +1,31 @@
 <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap-responsive.css" />
 <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/tadtools/css/xoops_adm.css" />
-<script language='javascript' type='text/javascript' src='<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js'></script>
+ 
 <{$i++}>
-<{foreach  key=key item=sign   from=$data  }>
+<{foreach  key=key item=sign   from=$data.kind  }>
 <{if ($sign.cando) }>
-<div class="row-fluid  alert-success" >
+<div class="row-fluid  alert-success"  oid="<{$sign.id}>">
 <{ else }>
-<div class="row-fluid" >
+<div class="row-fluid" oid="<{$sign.id}>">
 <{/if}>
 
-<span class="span5"><div class="alert alert-info"><span class="badge badge-info"><{$i++}></span><{$sign.title}></div><{$sign.doc}></span>
-<span class="span1"><span class="edit"> <i class="icon-pencil"></i></span><{$sign.admin}></span>
-<a class="btn btn-success" href="export.php?mid=7">匯出名單</a>
-<button  class="btn btn-danger"  >清空名單</button>
+<span class="span5"><div class="alert alert-info"><span class="badge badge-info"><{$i++}></span><{$sign.title}></div><div class="span4 offset1"><{$sign.doc}></div></span>
+<span class="span1"><span class="edit"> <i class="icon-pencil" title="編修"></i></span><{$sign.admin}></span>
+<a class="btn btn-success" href="export.php?mid=<{$sign.id}>">匯出名單</a>  <a href="all_list.php?id=<{$sign.id}>"><span class="label label-info">(已填:<{$data.class_sum[$sign.id]}>)</span></a>
 </div>
+<hr />
 <{/foreach}>
+
+<script>
+    //編修
+  $(document).on("click", ".edit", function(){
+
+    	var oid = $(this).parent().parent().attr("oid")  ;
+    //	alert(oid) ;
+    //轉址
+    	var url = "add_kind.php?do=edit&id="+ oid;    
+    	$(location).attr('href',url);
+ 
+  });
+  </script>
