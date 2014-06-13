@@ -10,8 +10,10 @@ $xoopsOption['template_main'] = "esss_index_tpl.html";
 include_once "header.php";
 include_once XOOPS_ROOT_PATH."/header.php";
 
-
-
+ 
+ if (!$xoopsUser) 
+  	redirect_header(XOOPS_URL,3, "需要登入，才能使用！");
+ 
 /*-----------function區--------------*/
 
  if ($_POST['ADD']=='add') {
@@ -90,17 +92,16 @@ if ($_POST['Submit_emp'] =='empt') {
 
 
 /*-----------執行動作判斷區----------*/
-
+	//取得任教班級
+	$class_id = get_my_class_id() ;
  if  ( $_GET['id'] ) {
 	$id = $_GET['id'] ;
-	
- 	
+ 
 	//取得報名項目
-	$data['kind_in'] = get_sign_kind($id) ;
+	$data['kind_in'] = get_sign_kind($id  ) ;
 	//var_dump($data['kind_in']) ;
-
- 	//取得任教班級
-	$class_id = get_my_class_id() ;
+ 
+ 	
 /*		
 	if ($isAdmin){
 	  	//管理者可以選取多班
@@ -118,7 +119,10 @@ if ($_POST['Submit_emp'] =='empt') {
 */	
 	//判別是否在填報年級
 	$grade = substr($class_id,0,1) ;
- 
+	
+	if  ( ! $class_id )  
+ 		 redirect_header("index.php",3, "非級任，無法填報"); 
+	
 	if  ( ! in_array($grade , $data['kind_in'][$id]['grade']) )  
  		 redirect_header("index.php",3, "貴班無需填報");
 		
@@ -135,7 +139,7 @@ if ($_POST['Submit_emp'] =='empt') {
 }else {	
 
 	 //取得所有報名期別
-	$data['kind'] = get_sign_kind() ;
+	$data['kind'] = get_sign_kind(0,'list', $class_id) ;
 }
 
  

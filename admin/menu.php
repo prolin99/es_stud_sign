@@ -14,7 +14,7 @@ $i++ ;
 $adminmenu[$i]['title'] = "增修報名表";
 $adminmenu[$i]['link'] = "admin/add_kind.php";
 $adminmenu[$i]['desc'] = '增修報名表';
-$adminmenu[$i]['icon'] = 'images/admin/about.png';
+$adminmenu[$i]['icon'] = 'images/admin/logadm.png';
 
 $i++ ;
 $adminmenu[$i]['title'] = "關於";

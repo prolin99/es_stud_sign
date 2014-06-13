@@ -10,6 +10,6 @@ define("_MI_ESSTUDSIGN_AUTHOR","prolin (prolin@tn.edu.tw)");
 define("_MI_ESSTUDSIGN_CREDITS","prolin");
 define("_MI_ESSTUDSIGN_DESC","以班級為單位報名");
 
-define("_MI_ES_SS_CONFIG_T1","預設出現新增欄位數");
-define("_MI_ES_SS_CONFIG_D1","預設出現新增欄位數");
+define("_MI_ES_SS_CONFIG_T1","預設出現自訂欄位數");
+define("_MI_ES_SS_CONFIG_D1","預設出現自訂欄位數");
 ?>

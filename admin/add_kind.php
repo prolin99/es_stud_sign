@@ -41,8 +41,8 @@ if ($_POST['ADD']) {
 	 	
 	 	
 	 	
-	//$uid = $xoopsUser->uid() ;  	
- 	$creater = $xoopsUser->getVar('name') ;
+	$uid = $xoopsUser->uid() ;  	
+ 	//$creater = $xoopsUser->getVar('name') ;
  	if ($_POST['okind_id']) 
  		$sql = " UPDATE  " . $xoopsDB->prefix("sign_kind") . "  SET  title ='$title' ,  doc = '$doc'  ,  
  			beg_date = '$beg_date' , end_date= '$end_date' , input_classY= '$input_classY'  ,stud_get = '$stud_get'  ,  
@@ -52,7 +52,7 @@ if ($_POST['ADD']) {
  	
  	else 
  		$sql = " insert into  " . $xoopsDB->prefix("sign_kind") . "  ( title ,  doc ,beg_date , end_date , input_classY  ,stud_get ,stud_get_more ,get_data_item  , input_data_item ,admin )
-			values ( '$title' , '$doc' ,  '$beg_date' , '$end_date' , '$input_classY' , '$stud_get' ,'$stud_get_more' , '$get_data_item' , '$input_data_item'  , '$creater'  ) " ;
+			values ( '$title' , '$doc' ,  '$beg_date' , '$end_date' , '$input_classY' , '$stud_get' ,'$stud_get_more' , '$get_data_item' , '$input_data_item'  , '$uid'  ) " ;
 				
  	$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 		
  	redirect_header("index.php",3, '新增一筆報名表....' );
@@ -82,9 +82,10 @@ if ($_POST['templ']) {
 	
 	$input_data_item=$row['input_data_item'] ;
 	
- 	$creater = $xoopsUser->getVar('name') ;
+ 	//$creater = $xoopsUser->getVar('name') ;
+ 	$uid = $xoopsUser->uid() ;  	
 	$sql = " insert into  " . $xoopsDB->prefix("sign_kind") . "  ( title ,  doc ,beg_date , end_date , input_classY  ,stud_get ,stud_get_more ,get_data_item  , input_data_item ,admin )
-			values ( '$title' , '$doc' ,  '$beg_date' , '$end_date' , '$input_classY' , '$stud_get' ,'$stud_get_more' , '$get_data_item' , '$input_data_item'  , '$creater'  ) " ;
+			values ( '$title' , '$doc' ,  '$beg_date' , '$end_date' , '$input_classY' , '$stud_get' ,'$stud_get_more' , '$get_data_item' , '$input_data_item'  , '$uid'  ) " ;
  	$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 	
  	$new_kind_id = $xoopsDB->getInsertId() ;
  	redirect_header("add_kind.php?do=edit&id=$new_kind_id",3, '複製一筆報名表....' ); 
@@ -108,6 +109,11 @@ if ($_POST['btn_clear'] =='clear') {
 if ($_GET['do']=='edit' and $_GET['id']) {
 	//要編修表單
 	$data['edit_kind']= get_sign_kind($_GET['id']) ;
+	//檢查是否為擁用者，或系統管理員
+	$uid = $xoopsUser->uid() ;  
+	
+	if (($data['edit_kind'][$_GET['id']]['uid'] <> $uid) and  !in_array(1,$xoopsUser->groups()) )
+		redirect_header("index.php",3, '沒有權限修這張報名表....' ); 
  }	
  
  

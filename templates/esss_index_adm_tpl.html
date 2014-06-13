@@ -2,6 +2,11 @@
 <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap-responsive.css" />
 <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/tadtools/css/xoops_adm.css" />
  
+<{if (! $data.kind ) }>
+<h3>你還沒有建立報名表！</h3>
+<{else}>
+<h3>管理報名表</h3>
+<{/if}>
 <{$i++}>
 <{foreach  key=key item=sign   from=$data.kind  }>
 <{if ($sign.cando) }>
@@ -12,7 +17,13 @@
 
 <span class="span5"><div class="alert alert-info"><span class="badge badge-info"><{$i++}></span><{$sign.title}></div><div class="span4 offset1"><{$sign.doc}></div></span>
 <span class="span1"><span class="edit"> <i class="icon-pencil" title="編修"></i></span><{$sign.admin}></span>
-<a class="btn btn-success" href="export.php?mid=<{$sign.id}>">匯出名單</a>  <a href="all_list.php?id=<{$sign.id}>"><span class="label label-info">(已填:<{$data.class_sum[$sign.id]}>)</span></a>
+<a class="btn btn-success" href="export.php?mid=<{$sign.id}>">匯出名單</a>  
+<{if ($system_admin)}>
+<a class="btn btn-danger" onclick='return confirm("確定要刪除報名表?")' href="index.php?del_id=<{$sign.id}>">刪除</a>  
+<a class="btn btn-warning"  onclick='return confirm("確定要清空報名資料?")' href="index.php?clear_id=<{$sign.id}>">清空</a>  
+<{/if}>
+<a href="all_list.php?id=<{$sign.id}>"><span class="label label-info">(已填班數:<{$data.class_sum[$sign.id]}>)</span></a>
+
 </div>
 <hr />
 <{/foreach}>

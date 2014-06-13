@@ -35,7 +35,7 @@
     	<div  class="row-fluid" ord_id="<{$i}>">
  	
         <span class="span2"><span class="badge badge-info"><{$i}></span>
-        <input class="span9 sitid" id="sitid_<{$i}>" name="num_id[<{$i}>]"   value="<{$data.my_class[$data.sel_class][$i].stud_name }>" type="text"   title="座號才能擷取出資料" placeholder="座號或姓名" data="<{$sign.get_data_item}>"></span>
+        <input class="span8 sitid" id="sitid_<{$i}>" name="num_id[<{$i}>]"   value="<{$data.my_class[$data.sel_class][$i].stud_name }>" type="text"   title="座號才能擷取出資料" placeholder="座號或姓名" data="<{$sign.get_data_item}>"></span>
         <!--     需輸入欄         -->
         <{foreach  key=key item=fi   from=$sign.field_input  }>
         <{ if ($fi[2]=='d') }>
@@ -232,17 +232,30 @@ $(function() {
 
 <{else}>
 <!--     列出總表               ---------------------------------------------------------------------------             -->
+<{if (! $data.kind ) }>
+<h1>還沒有報名表</h1>
+<{/if}>
 <{$i++}>
 <{foreach  key=key item=sign   from=$data.kind  }>
 <{if ($sign.cando) }>
 <div class="row-fluid  alert-success" >
-<span class="span1">
- 
-<a class="btn btn-success" href="index.php?id=<{$sign.id}>" >報名</a>
-</span>
+	
+	<span class="span1">
+	<{if ($sign.need) }>
+		<{if ($sign.inputed) }>
+			<a class="btn btn-info" href="index.php?id=<{$sign.id}>" title="已填寫過，再次修正！">修改</a>
+			
+		<{else}>	
+			<a class="btn btn-success" href="index.php?id=<{$sign.id}>" title="第一次輸入！">報名</a>
+		<{/if}>	
+	<{else}>
+	<span class="label" title="所在的年級無需填報">無需填報</span>
+	<{/if}>
+	</span>
+
 <{ else }>
-<div class="row-fluid  alert-error" >
-<span class="span1">
+<div class="row-fluid" >
+<span class="label span1" >
 過期
 </span>
 <{/if}>

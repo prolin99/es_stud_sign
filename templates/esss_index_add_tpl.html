@@ -14,13 +14,13 @@
     	<div class="span6">
 		<div>
     		<label>報名表名稱</label>
-    		<input type="text" name="doc_title" placeholder="報名表名稱" class='span8'>
+    		<input type="text" id="doc_title" name="doc_title" placeholder="報名表名稱" class='span8'>
     		</div>
     		
  		<div>
     		<label  >舊樣版</label>
 		<{html_options name="old_templ" options=$data.kind  class='span8' }>
-		<button type="submit" class="btn btn-info"  id="templ"  name='templ' value='templ' >套用</button>
+		<button type="submit" class="btn btn-info"  id="templ"  name='templ' value='templ' onclick="return check_1() ;" >套用</button>
  
 		</div>
 		
@@ -71,7 +71,7 @@
      
     <div class="row-fluid  alert-success"  id="field">
     	<div class="row-fluid" >
- 	<span class="span1"><span class="label">代碼</span> </span>
+ 	<span class="span2"><span class="label">代碼</span> </span>
   	<span class="span2"><span class="label">欄名</span></span>
 	<span class="span1"><span class="label">格式</span></span>
 	<span class="span1"><span class="label">欄寬1~3</span></span>
@@ -81,7 +81,7 @@
 	
     	<div  class="row-fluid">
  	
-        <span class="span1"><span class="badge badge-info"><{$smarty.section.ti.index}></span>
+        <span class="span2"><span class="badge badge-info"><{$smarty.section.ti.index}></span>
         <input class="span6" name="txtItem[]"   value="F<{$smarty.section.ti.index}>" type="text"   title="欄位代碼(英數)" placeholder="欄位代碼(英數)"> </span> 
   	<span class="span2"><input class="span10" name="txtItemName[]" type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span> 
   	<span class="span1">
@@ -98,13 +98,22 @@
  	
     </div>
     
-    <button type="submit" class="btn btn-primary" name='ADD' value='ADD'  >新增</button>
+    <button type="submit" class="btn btn-primary" name='ADD' value='ADD' onclick="return check_1() ;"> 新增</button>
     </fieldset>
     </form>
 
 
 </div>
-
+	<script> 
+	function check_1() {
+		//alert ($("#assn").val() ) ;
+		if (  $("#doc_title").val()=="" ) {
+			alert ('需要輸入標題！')　;
+			return false ;
+		}
+ 
+	}
+	</script>
 
 <{ else  }>
 <!----- 編修模式---------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -173,7 +182,7 @@
      <h4  >額外輸入欄位</h4>   
     <div class="row-fluid  alert-success"  id="field">
     	<div class="row-fluid" >
- 	<span class="span1"><span class="label">代碼</span> </span>
+ 	<span class="span2"><span class="label">代碼</span> </span>
   	<span class="span2"><span class="label">欄名</span></span>
 	<span class="span1"><span class="label">格式</span></span>
 	<span class="span1"><span class="label">欄寬1~3</span></span>
@@ -183,7 +192,7 @@
 	<{assign var="nti" value=$smarty.section.ti.index }>
     	<div  class="row-fluid">
  	
-        <span class="span1"><span class="badge badge-info"><{$nti}></span>
+        <span class="span2"><span class="badge badge-info"><{$nti}></span>
         <input class="span6" name="txtItem[]"   value="<{$sign.field_input[$nti][0]}>" type="text"   title="欄位代碼(英數)" placeholder="欄位代碼(英數)"> </span> 
   	<span class="span2"><input class="span10"  name="txtItemName[]"  value="<{$sign.field_input[$nti][1] }>"  type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span> 
   	<span class="span1">

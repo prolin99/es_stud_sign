@@ -102,21 +102,29 @@ function get_my_class_id($uid =0   ) {
 
 
 //=====================================================
-function get_sign_kind($id =0 , $mode='action') {
-	//取得填報項目
+function get_sign_kind($id =0 , $mode='list' ,$class_id=0  ) {
+	//取得填報項目 ($id 指定單筆資料， list/admin 列出全部(填報)/擁有者管理    $class_id 班級判斷可否填報  
 	//預設只出現最近可以填報的項目
-	global  $xoopsDB ;
+	global  $xoopsDB , $xoopsUser ;
+	
 	
 	if ($id <>0) {
 		//單筆記錄
-		$sql =  "  SELECT  *  ,( end_date >=  (NOW() - INTERVAL 1 DAY ) ) as cando  , (datediff(`end_date`,now()) +1)  as d_days FROM " . $xoopsDB->prefix("sign_kind") .  "  where id = '$id'  "  ;
+		$sql =  "  SELECT  *  ,( end_date >=  (NOW() - INTERVAL 1 DAY ) ) as cando  , (datediff(`end_date`,now()) +1)  as d_days FROM " . 
+				$xoopsDB->prefix("sign_kind") .  "  where id = '$id'  "  ;
 	}else 	{
-		//列出全部記錄
-
-		$sql =  "  SELECT  *  ,( end_date >=  (NOW() - INTERVAL 1 DAY ) ) as cando , (datediff(`end_date`,now()) +1)  as d_days   FROM " . $xoopsDB->prefix("sign_kind") .  " order by   end_date DESC  LIMIT 0 , 15 "  ;
-		
+ 
+		if (in_array(1,$xoopsUser->groups())  or  ($mode=='list' )  )		{ //系統管理員，列出全部
+			$sql =  "  SELECT  *  ,( end_date >=  (NOW() - INTERVAL 1 DAY ) ) as cando , (datediff(`end_date`,now()) +1)  as d_days   FROM " . 
+					$xoopsDB->prefix("sign_kind") .  " order by   id DESC  LIMIT 0 , 15 "  ;
+		}else {	
+			//列出全部記錄
+			$sql =  "  SELECT  *  ,( end_date >=  (NOW() - INTERVAL 1 DAY ) ) as cando , (datediff(`end_date`,now()) +1)  as d_days   FROM " . 
+				$xoopsDB->prefix("sign_kind") .  " where admin ='". $xoopsUser->uid()  ."'   order by   id  DESC  LIMIT 0 , 15 "  ;
+		 }
 	}	
  
+ 	//echo $sql  ;
 	$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
 	
 	while($row=$xoopsDB->fetchArray($result)){
@@ -151,7 +159,24 @@ function get_sign_kind($id =0 , $mode='action') {
 					$grade_set[$v]=$v  ;
 			}		
 			$row['grade'] = $grade_set ;
-			
+ 
+			//有班級查看，
+			if ($class_id) {
+				//是否能填報
+				$row['need']= in_array(substr($class_id,0,1) , $grade_set ) ;
+				//是否已填報過了
+				$row['inputed']=check_class_input( $row['id'] ,$class_id) ;
+ 
+			}	else {
+				$row['need']= 1;
+			}	
+ 
+			$row['uid']= $row['admin']  ;
+			//取得管理員姓名
+		    	$uid_name=XoopsUser::getUnameFromId($row['admin'],1);
+    			if(empty($uid_name))$uid_name=XoopsUser::getUnameFromId($row['admin'],0);
+    			$row['admin'] = $uid_name ;
+    			
  			$data[$row['id']] = $row ;
  			
 	}	
@@ -159,7 +184,18 @@ function get_sign_kind($id =0 , $mode='action') {
 }	
 
 
-
+//檢查班級是否已填報過了 
+function check_class_input($kid , $class_id)  {
+	global  $xoopsDB ;
+	$sql =  "  SELECT  count(*) as cc   FROM " . $xoopsDB->prefix("sign_data") .  " where  kind= '$kid' and  class_id='$class_id'   "  ;	
+ 
+	$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
+	while($row=$xoopsDB->fetchArray($result)){
+		$cc = $row['cc'] ;
+	}	
+ 
+	return $cc  ;	
+}	
 
 function get_sign_kind_item( ) {
 	//取得填報項目只有代號、名稱
@@ -210,14 +246,24 @@ function get_all_sign_list($id) {
 	$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
 	while($row=$xoopsDB->fetchArray($result)){
  			$sign_class[$row['class_id']] = $row['cc'] ;
- 
 	}	
+	
+	//有填報的班級，但為 -99  即無人要報名
+	$sql = "   SELECT  class_id ,count(*) as cc   FROM " . $xoopsDB->prefix("sign_data") .  " where   kind ='$id' and order_pos='-99'  group by class_id   " ;
+	$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
+	while($row=$xoopsDB->fetchArray($result)){
+ 			$sign_class_no[$row['class_id']] = $row['cc'] ;
+ 
+	}		
  
 	//選擇只列出需填報班級
 	foreach ($all_class  as $k =>$v ) {
  
 		if  ( in_array(substr($k,0,1), $class_Y) ) {
-			$data[$k]= $sign_class[$k]  ;
+			if  ( $sign_class[$k] == 1 and  $sign_class_no[$k] ) 
+				$data[$k]= '無人報名'  ;
+			else 	
+				$data[$k]= $sign_class[$k]  ;
  
 		}	
  
@@ -277,11 +323,11 @@ function delete_sign_kind($kind_id) {
 
 	global  $xoopsDB ;
 	$sql =  "  DELETE    FROM " . $xoopsDB->prefix("sign_data") .  " where kind ='$kind_id'   "  ;
- 	$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
+ 	$result = $xoopsDB->queryF($sql) or die($sql."<br>". mysql_error()); 
  	
  	
 	$sql =  "  DELETE    FROM " . $xoopsDB->prefix("sign_kind") .  " where id ='$kind_id'   "  ;
- 	$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
+ 	$result = $xoopsDB->queryF($sql) or die($sql."<br>". mysql_error()); 
  
 }	
 
@@ -290,7 +336,7 @@ function clear_sign_kind($kind_id) {
 
 	global  $xoopsDB ;
 	$sql =  "  DELETE    FROM " . $xoopsDB->prefix("sign_data") .  " where kind ='$kind_id'   "  ;
- 	$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
+ 	$result = $xoopsDB->queryF($sql) or die($sql."<br>". mysql_error()); 
  	
  
 }	
