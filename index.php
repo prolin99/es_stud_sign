@@ -95,7 +95,7 @@ if ($_POST['Submit_emp'] =='empt') {
 	//取得任教班級
 	$class_id = get_my_class_id() ;
  if  ( $_GET['id'] ) {
-	$id = $_GET['id'] ;
+	$id = intval($_GET['id']) ;
  
 	//取得報名項目
 	$data['kind_in'] = get_sign_kind($id  ) ;
