@@ -92,8 +92,9 @@ if ($_POST['Submit_emp'] =='empt') {
 
 
 /*-----------執行動作判斷區----------*/
-	//取得任教班級
-	$class_id = get_my_class_id() ;
+//取得任教班級
+$class_id = get_my_class_id() ;
+
  if  ( $_GET['id'] ) {
 	$id = intval($_GET['id']) ;
  

@@ -12,7 +12,7 @@
     <form  action="index.php" method="post">
     <fieldset>
     <h3><{ $sign.title }> </h3>
-    <h4><{ $sign.doc }> </h4>
+    <h5><{ $sign.doc|nl2br }> </h5>
     <!--  尚無輸入資料  -->
     <{if (! $data.my_class) }>
     <!--  尚無報名資料   -->    
@@ -260,7 +260,7 @@ $(function() {
 </span>
 <{/if}>
 
-<span class="span5"><div class="alert alert-info"><span class="badge badge-info"><{$sign.id}></span><{$sign.title}></div><div class="span4 offset1"><{$sign.doc}></div></span>
+<span class="span5"><div class="alert alert-info"><span class="badge badge-info"><{$sign.id}></span><{$sign.title}></div><div class="span10 offset1"><{$sign.doc|nl2br}></div></span>
 <span class="span1"><{$sign.admin}></span>
 <{if ($sign.d_days>0) }>
 <span class="label label-info">還有 <{$sign.d_days}> 天</span>  <span > 填報年級： <{$sign.input_classY}> </span> 

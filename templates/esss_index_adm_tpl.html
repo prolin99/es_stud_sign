@@ -15,7 +15,7 @@
 <div class="row-fluid" oid="<{$sign.id}>">
 <{/if}>
 
-<span class="span5"><div class="alert alert-info"><span class="badge badge-info"><{$i++}></span><{$sign.title}></div><div class="span4 offset1"><{$sign.doc}></div></span>
+<span class="span5"><div class="alert alert-info"><span class="badge badge-info"><{$i++}></span><{$sign.title}></div><div class="span10 offset1"><{$sign.doc|nl2br}></div></span>
 <span class="span1"><span class="edit"> <i class="icon-pencil" title="編修"></i></span><{$sign.admin}></span>
 <a class="btn btn-success" href="export.php?mid=<{$sign.id}>">匯出名單</a>  
 <{if ($system_admin)}>
