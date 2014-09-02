@@ -129,13 +129,14 @@ $class_id = get_my_class_id() ;
 		
 	//取得現在班級姓名
 	$data['class_stud']=get_class_students($class_id) ;
-	
+	//var_dump($data['class_stud']) ;
+	 
 	$data['sel_class']  =$class_id ;
 
  
 	//取得已填報資料
 	$data['my_class'] =  get_sign_data($id, $class_id) ;
-	//
+	//var_dump($data['my_class']) ;
 	
 }else {	
 

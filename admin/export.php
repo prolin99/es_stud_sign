@@ -113,6 +113,10 @@ if  ($_GET['mid']) {
 						$b_date = preg_split("/[-\/]/",$my_data) ;
 						$my_data="=date({$b_date[0]}, {$b_date[1]}, {$b_date[2]}) "  ;						
 					}
+
+					if ($v[2]=='o'){	//選項
+						$my_data=$v[5][$my_data] ;						
+					}					
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str , $my_data) ;
 			}	
 			

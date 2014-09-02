@@ -128,8 +128,8 @@ function get_sign_kind($id =0 , $mode='list' ,$class_id=0  ) {
 	$result = $xoopsDB->query($sql) or die($sql."<br>". mysql_error()); 
 	
 	while($row=$xoopsDB->fetchArray($result)){
-			//把輸入欄位轉換陣列  D1__dd__d__1__##   
-			//以 ## 分欄數， 代號__中文欄名__格式__欄寬
+			//把輸入欄位轉換陣列  D1__dd__d__1__default##   
+			//以 ## 分欄數， 代號__中文欄名__格式__欄寬__預設值(選項)
 			$i =0 ;
 			$fi= preg_split("/##/" ,$row['input_data_item']) ;
 			foreach ($fi as $k => $v) {
@@ -140,8 +140,12 @@ function get_sign_kind($id =0 , $mode='list' ,$class_id=0  ) {
 					//如果欄寬未設定
 					if ($fi_list[$i][3]==0)
 						$fi_list[$i][3]=1 ;
+					//如有選項，把逗號切開
+					$fi_list[$i][5]= preg_split("/,/" ,$fi_list[$i][4]) ;					
 				}	
 			}	
+
+
 			$row['field_input'] = $fi_list ;
  
 			//把擷取欄位轉換陣列  birthday,class_sit_num, 以逗號作分隔的資料欄名
