@@ -18,10 +18,15 @@
     <!--  尚無報名資料   -->    
     <label>快速輸入區(空白做分隔)</label>
     <input type="text" class="span5"  id="q_input"  placeholder="輸入學生座號，多人時以空白分隔" data="<{$sign.get_data_item}>">
-    <p class='btn btn-success' onclick='javascript:input_all();' data="<{$sign.get_data_item}>">全班座號</p>
+    <p class='btn btn-success' onclick='javascript:input_all();' data="<{$sign.get_data_item}>" title='把全班的學生座號全部填報，用於全體調查表'>全班都填</p>
     <{/if}>
     <!--    輸入欄         --------------------------------- -->
+    <div  class="row-fluid"  >
+    <div class="span6">
     <h5>正取資料輸入(直接輸入座號，自動轉換姓名)</h5>
+    </div>
+    <div class="label label-success">記得最後要按下報名完成鍵！</div>
+    </div>
     	<div  class="row-fluid"  >
         <span class="label label-info span2"><span >順序.</span>座號</span>
         <{foreach  key=key item=fi   from=$sign.field_input  }>
@@ -177,7 +182,7 @@ $(function() {
 });
 
 function  input_all() {
-    var sit_id='1 2 3 4 5 6 7 8 9 10 11 12 13' ;
+    var sit_id='<{$data.class_sit_num_list}>' ;
     var get_f = $( this ).attr('data') ;
     var splits = sit_id.split(" ") ;
         for (var i in splits) {

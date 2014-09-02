@@ -59,18 +59,28 @@ function get_class_students( $class_id , $mode='class') {
 	}else 
 		$sql =  "  SELECT  *  FROM " . $xoopsDB->prefix("e_student") . "   where class_id='$class_id'   ORDER BY  `class_sit_num`  " ;
  
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-		while($stud=$xoopsDB->fetchArray($result)){
- 
-			$data[$stud['tn_id'] ]=$stud ;
-	
-		}		
+	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+	while($stud=$xoopsDB->fetchArray($result)){
+ 		$data[$stud['tn_id'] ]=$stud ;
+	}		
 	return $data ;		
 	//echo $sql ;
 	
 }
 
+function get_class_all_sit_id( $class_id ) {
+	//取得該班的學生 座號串列
+	global  $xoopsDB ;
 
+	$sql =  "  SELECT  class_sit_num  FROM " . $xoopsDB->prefix("e_student") . "   where class_id='$class_id'   ORDER BY  `class_sit_num`  " ;
+ 
+	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+	while($stud=$xoopsDB->fetchArray($result)){
+ 		$data .= $stud['class_sit_num'] .' ';
+	}		
+	return $data ;		
+	//echo $sql ;
+}
 
 Function get_class_teacher_list() {
 	//取得全部級任名冊
