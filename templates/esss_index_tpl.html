@@ -8,9 +8,19 @@
 <{foreach  key=key item=sign   from=$data.kind_in  }>
  
 <!-- <{$i++}> -->
+    <{ if  ($data.admin) }>
+    <form  action="index.php?id=<{ $sign.id }>" method="post">
+         班級：<{html_options name="admin_class_id"  options=$data.class_list   selected=$data.sel_class onchange="submit();"  }>    
+         <span class="alert alert-error">管理員權限!!!!</span>
+    </form>
+    <{else}>    
    <h3> 班級：<{$data.sel_class }></h3>
+   <{/if}>
+
+
     <form  action="index.php" method="post">
     <fieldset>
+   
     <h3><{ $sign.title }> </h3>
     <h5><{ $sign.doc|nl2br }> </h5>
     <!--  尚無輸入資料  -->

@@ -102,31 +102,31 @@ $class_id = get_my_class_id() ;
 	$data['kind_in'] = get_sign_kind($id  ) ;
 	//var_dump($data['kind_in']) ;
  
- 	
-/*		
 	if ($isAdmin){
 	  	//管理者可以選取多班
 		$data['admin'] = true ;
 		//取得班級
+		$data['class_list']=get_class_list ( $data['kind_in'][$id]['input_classY'])  ;
+
 		if ($_POST['admin_class_id']) 
 			$class_id=$_POST['admin_class_id'] ;
 		elseif ( !$class_id)
-			$class_id= '101' ;
-
-		//班級名稱列表
-		$data['class_list']=get_class_list() ;
-
+			$class_id= key($data['class_list'])  ;
+ 
+		$grade = substr($class_id,0,1) ;
+		if  ( ! in_array($grade , $data['kind_in'][$id]['grade']) )  
+			$class_id= key($data['class_list'])  ;
 	}	
-*/	
+	
 	//判別是否在填報年級
 	$grade = substr($class_id,0,1) ;
 	
 	if  ( ! $class_id )  
  		 redirect_header("index.php",3, "非級任，無法填報"); 
-	
+ 
 	if  ( ! in_array($grade , $data['kind_in'][$id]['grade']) )  
  		 redirect_header("index.php",3, "貴班無需填報");
-		
+ 	
 	//取得現在班級姓名
 	$data['class_stud']=get_class_students($class_id) ;
 	//var_dump($data['class_stud']) ;
@@ -136,13 +136,13 @@ $class_id = get_my_class_id() ;
 
  
 	//取得已填報資料
-	$data['my_class'] =  get_sign_data($id, $class_id) ;
+	$data['my_class'] =  get_sign_data($id, $class_id ) ;
 	//var_dump($data['my_class']) ;
 	
 }else {	
 
 	 //取得所有報名期別
-	$data['kind'] = get_sign_kind(0,'list', $class_id) ;
+	$data['kind'] = get_sign_kind(0,'list', $class_id , $isAdmin) ;
 }
 
  

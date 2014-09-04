@@ -19,12 +19,14 @@ $DEF_SET['fields']=   $xoopsModuleConfig['es_ss_field_num'] +1 ;
 
 
 //=================================================================================================
-function get_class_list(  ) {
+function get_class_list(  $grade='' ) {
 	//取得全校班級列表 
 	global  $xoopsDB ;
- 
+ 	if ($grade=='')	
 		$sql =  "  SELECT  class_id  FROM " . $xoopsDB->prefix("e_student") . "   group by class_id   " ;
- 
+	else 
+		$sql =  "  SELECT  class_id    FROM " . $xoopsDB->prefix("e_student") . "   where INSTR( '$grade' ,SUBSTR(class_id, 1, 1))    group by class_id   " ;
+ 	 
 		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
 		while($row=$xoopsDB->fetchArray($result)){
  
@@ -112,7 +114,7 @@ function get_my_class_id($uid =0   ) {
 
 
 //=====================================================
-function get_sign_kind($id =0 , $mode='list' ,$class_id=0  ) {
+function get_sign_kind($id =0 , $mode='list' ,$class_id=0  , $isAdmin=0 ) {
 	//取得填報項目 ($id 指定單筆資料， list/admin 列出全部(填報)/擁有者管理    $class_id 班級判斷可否填報  
 	//預設只出現最近可以填報的項目
 	global  $xoopsDB , $xoopsUser ;
@@ -184,6 +186,8 @@ function get_sign_kind($id =0 , $mode='list' ,$class_id=0  ) {
 			}	else {
 				$row['need']= 1;
 			}	
+			if ($isAdmin)  
+				$row['need']=1 ;
  
 			$row['uid']= $row['admin']  ;
 			//取得管理員姓名
@@ -288,7 +292,7 @@ function get_all_sign_list($id) {
 
 
 
-function get_sign_data($kind_id, $class_id) {
+function get_sign_data($kind_id, $class_id  ) {
 	//取得該項的填報學生，
 	//$class_id =all 表示全部，
 	//order_pos = -99 代表已填報無學生參加，但不影響
