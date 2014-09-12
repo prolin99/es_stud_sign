@@ -35,8 +35,10 @@ if (in_array(1,$xoopsUser->groups()))   {
 
 //取得最近的期別---------------------------------------------------------------------------------------------------------------------
 $data['kind'] = get_sign_kind(0, 'admin') ;
+foreach ($data['kind']  as  $id =>$kind) {
+	$data['input_sum'][$id] = get_all_sign_list($id)  ;
+}
  
- 		
 //取得已報名的班級數
 $data['class_sum'] = sum_sign_data( );
 		
