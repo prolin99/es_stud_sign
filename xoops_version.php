@@ -8,7 +8,7 @@
 //---基本設定---//
 
 $modversion['name'] ='班級報名';				//模組名稱
-$modversion['version']	= '0.6';				//模組版次
+$modversion['version']	= '0.7';				//模組版次
 $modversion['author'] = 'prolin(prolin@tn.edu.tw)';		//模組作者
 $modversion['description'] ='以班級為單位報名';			//模組說明
 $modversion['credits']	= 'prolin';				//模組授權者
