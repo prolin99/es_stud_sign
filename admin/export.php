@@ -14,11 +14,15 @@ require_once '../../tadtools/PHPExcel/IOFactory.php';
 /*-----------function區--------------*/
 
 
+
 /*-----------執行動作判斷區----------*/
 if  ($_GET['mid']) {
 	$mid =$_GET['mid'] ;
 	//echo $mid  ;
 	
+	//取得中文班名
+	$class_list_c = es_class_name_list_c('long')  ;
+
 	//取得報名表格式
 	$kind_get=get_sign_kind($mid) ;
 	$kind=$kind_get[$mid] ;
@@ -66,9 +70,9 @@ if  ($_GET['mid']) {
       }	      
  
       //是否正取
-		$col++ ;
-		$col_str =$col .$row ;
-		$objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str , '錄取') ;      
+	$col++ ;
+	$col_str =$col .$row ;
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str , '錄取') ;      
  
  
         //資料區
@@ -80,7 +84,7 @@ if  ($_GET['mid']) {
 			
 			$objPHPExcel->setActiveSheetIndex(0)
 				->setCellValue('A'.$row,$row-1)
-				->setCellValue('B'.$row , $stud['class_id'])
+				->setCellValue('B'.$row , $class_list_c[$stud['class_id']] )
 				->setCellValue('C'.$row ,$stud['order_pos'])
 				->setCellValue('D'.$row, $stud['stud_name']) ;
 			//擷取欄位

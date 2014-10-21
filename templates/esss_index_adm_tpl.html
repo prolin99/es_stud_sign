@@ -19,7 +19,7 @@
 </span>
 <span class="span1"><span class="edit"> <i class="icon-pencil" title="編修"></i></span><{$sign.admin}></span>
 <span class="span1">
-<a class="btn btn-success" href="export.php?mid=<{$sign.id}>">匯出名單</a>  
+<a class="btn btn-success" href="export.php?mid=<{$sign.id}>" title="匯出 EXCEL 檔">匯出</a>  
 </span>
 <{if ($system_admin)}>
 <span class="span2">
@@ -28,13 +28,13 @@
 </span>
 <{/if}>
 </span>
-<span class="span1 show" data_ref="status_<{$sign.id}>">(已填:<{$data.class_sum[$sign.id]}>)</span>
+<span class="span1 show" data_ref="status_<{$sign.id}>" title='點選查看各班填報情形'>已填:<{$data.class_sum[$sign.id]}></span>
 <span class="span3" id="status_<{$sign.id}>" style="display:none">
 	<{foreach  key=class_id  item=input_sum   from=$data.input_sum[$sign.id]  }>
 		<{if  $input_sum }>
-		<span class="label  label-success"><{$class_id}>(<{$input_sum}>) </span> ,
+		<span class="label  label-success"><{$data.class_list_c[$class_id]}>(<{$input_sum}>) </span> ,
 		<{else}>
-		<span class="label"><{$class_id}>(<{$input_sum}>)</span> ,
+		<span class="label"><{$data.class_list_c[$class_id]}></span> ,
 		<{/if}>
 	<{/foreach}>
 </span>

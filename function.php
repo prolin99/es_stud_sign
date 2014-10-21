@@ -10,6 +10,12 @@ if(!file_exists(XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php")){
 }
 include_once XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php";
 
+//需要單位名稱模組(e_stud_import)1.9
+if(!file_exists(XOOPS_ROOT_PATH."/modules/e_stud_import/es_comm_function.php")){
+ redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=33",3, '需要單位名稱模組(e_stud_import)1.9以上');
+}
+include_once XOOPS_ROOT_PATH."/modules/e_stud_import/es_comm_function.php";
+
 
 /********************* 自訂函數 *********************/
 $DEF_SET['export']= array('person_id' =>'身份證','sex'=>'性別','birthday' =>'生日' ,'class_sit_num'=>'座號' ,'parent'=>'監護人') ;
