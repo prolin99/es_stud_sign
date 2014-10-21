@@ -10,11 +10,11 @@
 <!-- <{$i++}> -->
     <{ if  ($data.admin) }>
     <form  action="index.php?id=<{ $sign.id }>" method="post">
-         班級：<{html_options name="admin_class_id"  options=$data.class_list   selected=$data.sel_class onchange="submit();"  }>    
+         班級：<{html_options name="admin_class_id"  options=$data.class_list_c   selected=$data.sel_class onchange="submit();"  }>    
          <span class="alert alert-error">管理員權限!!!!</span>
     </form>
     <{else}>    
-   <h3> 班級：<{$data.sel_class }></h3>
+   <h3> 班級：<{$data.class_list_c[$data.sel_class] }></h3>
    <{/if}>
 
 
@@ -26,8 +26,9 @@
     <!--  尚無輸入資料  -->
     <{if (! $data.my_class) }>
     <!--  尚無報名資料   -->    
-    <label>快速輸入區(空白做分隔)</label>
-    <input type="text" class="span5"  id="q_input"  placeholder="輸入學生座號，多人時以空白分隔" data="<{$sign.get_data_item}>">
+    <label>快速輸入區(空白做分隔)，移開後會自動擷取資料</label>
+    <input type="text" class="span5"  id="q_input"  placeholder="輸入學生座號，多人時以空白分隔" data="<{$sign.get_data_item}>"  title='有修改，移開後會自動擷取資料。'>
+    <p  class="btn btn-primary"   >取資料</p>
     <p class='btn btn-success' onclick='javascript:input_all();' data="<{$sign.get_data_item}>" title='把全班的學生座號全部填報，用於全體調查表'>全班都填</p>
     <{/if}>
     <!--    輸入欄         --------------------------------- -->
@@ -35,7 +36,7 @@
     <div class="span6">
     <h5>正取資料輸入(直接輸入座號，自動轉換姓名)</h5>
     </div>
-    <div class="label label-success">記得最後要按下報名完成鍵！</div>
+
     </div>
     	<div  class="row-fluid"  >
         <span class="label label-info span2"><span >順序.</span>座號</span>
