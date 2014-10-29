@@ -29,7 +29,7 @@
     <label>快速輸入區(空白做分隔)，移開後會自動擷取資料</label>
     <input type="text" class="span5"  id="q_input"  placeholder="輸入學生座號，多人時以空白分隔" data="<{$sign.get_data_item}>"  title='有修改，移開後會自動擷取資料。'>
     <p  class="btn btn-primary"   >取資料</p>
-    <p class='btn btn-success' onclick='javascript:input_all();' data="<{$sign.get_data_item}>" title='把全班的學生座號全部填報，用於全體調查表'>全班都填</p>
+    <p class='btn btn-success' onclick='javascript:input_all();' id="btn_all"  data="<{$sign.get_data_item}>" title='把全班的學生座號全部填報，用於全體調查表'>全班都填</p>
     <{/if}>
     <!--    輸入欄         --------------------------------- -->
     <div  class="row-fluid"  >
@@ -194,7 +194,8 @@ $(function() {
 
 function  input_all() {
     var sit_id='<{$data.class_sit_num_list}>' ;
-    var get_f = $( this ).attr('data') ;
+    var get_f = $( '#btn_all' ).attr('data') ;
+    //alert(get_f) ;
     var splits = sit_id.split(" ") ;
         for (var i in splits) {
             var j = i ;
