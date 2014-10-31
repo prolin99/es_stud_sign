@@ -132,14 +132,16 @@ function get_sign_kind($id =0 , $mode='list' ,$class_id=0  , $isAdmin=0 ) {
 				$xoopsDB->prefix("sign_kind") .  "  where id = '$id'  "  ;
 	}else 	{
  
-		if (in_array(1,$xoopsUser->groups())  or  ($mode=='list' )  )		{ //系統管理員，列出全部
+		//if (in_array(1,$xoopsUser->groups())  or  ($mode=='list' )  )		{ //系統管理員，列出全部
 			$sql =  "  SELECT  *  ,( end_date >=  (NOW() - INTERVAL 1 DAY ) ) as cando , (datediff(`end_date`,now()) +1)  as d_days   FROM " . 
 					$xoopsDB->prefix("sign_kind") .  " order by   id DESC  LIMIT 0 , 15 "  ;
+		/*			
 		}else {	
 			//列出全部記錄
 			$sql =  "  SELECT  *  ,( end_date >=  (NOW() - INTERVAL 1 DAY ) ) as cando , (datediff(`end_date`,now()) +1)  as d_days   FROM " . 
 				$xoopsDB->prefix("sign_kind") .  " where admin ='". $xoopsUser->uid()  ."'   order by   id  DESC  LIMIT 0 , 15 "  ;
 		 }
+		 */
 	}	
  
  	//echo $sql  ;
