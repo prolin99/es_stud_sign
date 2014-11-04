@@ -101,6 +101,10 @@ if  ($_GET['mid']) {
 					if ($v=='birthday'){
 						$b_date = preg_split("/[-\/]/",$stud['get_field_2'][$v]) ;
 						$my_data="=date({$b_date[0]}, {$b_date[1]}, {$b_date[2]}) "  ;
+						$objPHPExcel->setActiveSheetIndex(0)
+							->getStyle($col_str )          
+							->getNumberFormat()
+							->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD);
  					}
  
 					   $objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str , $my_data) ;
@@ -115,7 +119,11 @@ if  ($_GET['mid']) {
 					//日期格式
 					if ($v[2]=='d'){
 						$b_date = preg_split("/[-\/]/",$my_data) ;
-						$my_data="=date({$b_date[0]}, {$b_date[1]}, {$b_date[2]}) "  ;						
+						$my_data="=date({$b_date[0]}, {$b_date[1]}, {$b_date[2]}) "  ;		
+						$objPHPExcel->setActiveSheetIndex(0)
+							->getStyle($col_str )          
+							->getNumberFormat()
+							->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD);										
 					}
 
 					if ($v[2]=='o'){	//選項
