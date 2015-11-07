@@ -36,7 +36,7 @@
     <p  class="btn btn-primary"   >取資料</p>
     <p class='btn btn-success' onclick='javascript:input_all();' id="btn_all"  data="<{$sign.get_data_item}>" title='把全班的學生座號全部填報，用於全體調查表'>全班都填</p>
     <{/if}>
-    <!--    輸入欄         --------------------------------- -->
+    <!--    輸入欄          -->
     <div  class="row-fluid"  >
     <div class="span6">
     <h5>正取資料輸入(直接輸入座號，自動轉換姓名)</h5>
@@ -104,7 +104,7 @@
 	<!-- <{$i++}> -->
  	<{ /section }>
 
-    <!--    備取區         ------------------------------------------------------- -->
+    <!--    備取區          -->
     <{ if ($sign.stud_get_more) }>
     <h5>備取資料輸入(直接輸入座號修改)</h5>
 	<{section name=ti  start=0  loop=$sign.stud_get_more   step=1  }>
