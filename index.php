@@ -6,8 +6,9 @@
 // ------------------------------------------------------------------------- //
 /*-----------引入檔案區--------------*/
 
-$xoopsOption['template_main'] = "esss_index_tpl.html";
+//$xoopsOption['template_main'] = "esss_index_tpl.html";
 include_once "header.php";
+$xoopsOption['template_main'] = set_bootstrap("esss_index_tpl.html");
 include_once XOOPS_ROOT_PATH."/header.php";
 
 
@@ -131,7 +132,7 @@ $class_id = get_my_class_id() ;
   	if  ( ! in_array($grade , $data['kind_in'][$id]['grade']) )  $xoopsTpl->assign( "no_bootstrap_v2" , $_SESSION['bootstrap']>=3 ) ;
    		 redirect_header("index.php",3, "貴班無需填報");
   }
-  
+
 	//取得現在班級姓名
 	$data['class_stud']=get_class_students($class_id) ;
 	//var_dump($data['class_stud']) ;
