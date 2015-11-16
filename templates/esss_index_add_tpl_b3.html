@@ -6,7 +6,7 @@
 <!----- 新增模式 -->
 <div class="container">
     <form class="form-inline"  action="add_kind.php" method="post">
-    <fieldset>
+
     <legend>新增報名表</legend>
     <!--  報表名別  -->
     <div class="row">
@@ -29,7 +29,7 @@
     	</div>
 
     	<div class="col-md-6">
-        <div class="container">
+
           <div class='row'>
       		<h4>填報時間設定</h4>
       		 <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='beg_date'  class='form-control'  value="<{$data.beg_date}>" placeholder="指定開始日期">~
@@ -64,7 +64,6 @@
      		</div>
       </div>
 
- </div>
  </div>
 
 
@@ -105,7 +104,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary" name='ADD' value='ADD' onclick="return check_1() ;"> 新增</button>
-    </fieldset>
+
     </form>
 <div>
     說明：
@@ -142,7 +141,7 @@
 <{foreach  key=key item=sign   from=$data.edit_kind  }>
 <div class="row">
     <form class="form-inline"  action="add_kind.php" method="post">
-    <fieldset>
+
     <legend>修改報名表</legend>
     <!--  報表名別  -->
     <div class="row">
@@ -236,7 +235,7 @@
     <button type="submit" class="btn btn-primary" name='ADD' value='edit'  >修改</button>
     <button type="submit" class="btn btn-danger" name='btn_del' value='del'  onclick='return confirm("確定要刪除?")'  >刪除</button>
     <button type="submit" class="btn btn-warning" name='btn_clear' value='clear'  onclick='return confirm("確定要清空報名資料?")'   >清空報名資料</button>
-    </fieldset>
+
     </form>
 
 
