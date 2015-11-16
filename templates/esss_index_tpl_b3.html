@@ -315,12 +315,12 @@ $(function() {
 
 <{ else }>
 <div class="row" >
-<span class="label col-md-1 col-xs-2" >
-過期
+  	<span class="col-md-1 col-xs-2">
+      <span class="label label-default " >過期</span>
 </span>
 <{/if}>
 
-<span class="col-md-5 col-xs-5"><div class="alert alert-info"><span class="badge badge-info"><{$sign.id}></span><{$sign.title}></div><div class="col-md-1 col-xs-20 offset1"><{$sign.doc|nl2br}></div></span>
+<span class="col-md-5 col-xs-5"><div class="alert alert-info"><span class="badge badge-info"><{$sign.id}></span><{$sign.title}></div><div class="col-xs-offset-1"><{$sign.doc|nl2br}></div></span>
 <span class="col-md-1 col-xs-2"><{$sign.admin}></span>
 <{if ($sign.d_days>0) }>
 <span class="label label-info">還有 <{$sign.d_days}> 天</span>  <span > 填報年級： <{$sign.input_classY}> </span>

@@ -16,7 +16,7 @@ if ($_GET['class_sit_id']) {
             if ($_SESSION['bootstrap'] == '3')
                 $show_data = '<span class="label label-danger del"><span class="glyphicon glyphicon-remove"></spam>'.$data['name']. '</span>';
             else
-			    $show_data = '<span class="label del"><i class="icon-remove"></i>'.$data['name']. '</span>';
+			    			$show_data = '<span class="label del"><i class="icon-remove"></i>'.$data['name']. '</span>';
 			$hide_data =  'name:' .$data['name'] .',';
 			$field_get= preg_split("/,/" ,$_GET['fi'] ) ;
 			$json_array['name'] = $data['name'] ;

@@ -1,55 +1,56 @@
-<link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap-responsive.css" />
-<link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/tadtools/css/xoops_adm.css" />
+
+
 <script language='javascript' type='text/javascript' src='<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js'></script>
 
 <{ if ( ! $data.edit_kind) }>
 <!----- 新增模式 -->
-<div class="row-fluid">
+<div class="container">
     <form class="form-inline"  action="add_kind.php" method="post">
     <fieldset>
     <legend>新增報名表</legend>
     <!--  報表名別  -->
-    <div class="row-fluid">
-    	<div class="span6">
-		<div>
-    		<label>報名表名稱</label>
-    		<input type="text" id="doc_title" name="doc_title" placeholder="報名表名稱" class='span8'>
+    <div class="row">
+    	<div class="col-md-6">
+    		    <div>
+        		<label>報名表名稱</label>
+        		<input type="text" id="doc_title" name="doc_title" placeholder="報名表名稱" class='form-control'>
+        		</div>
+
+     		<div>
+        <label  >舊樣版</label>
+    		<{html_options name="old_templ" options=$data.kind  class='form-control'  }>
+    		<button type="submit" class="btn btn-info"  id="templ"  name='templ' value='templ' onclick="return check_1() ;" >套用</button>
     		</div>
 
- 		<div>
-    		<label  >舊樣版</label>
-		<{html_options name="old_templ" options=$data.kind  class='span8' }>
-		<button type="submit" class="btn btn-info"  id="templ"  name='templ' value='templ' onclick="return check_1() ;" >套用</button>
-
-		</div>
-
- 		<div>
-     		<label>說 明：</label>
-     		</div>
-    		<textarea class="span10" rows="4"  name="txtDoc" placeholder="填表時說明內容 ..... "></textarea>
-
+     		<div>
+        <label>說 明：</label>
+        </div>
+        <textarea  rows="4"  name="txtDoc" class='form-control' placeholder="填表時說明內容 ..... "></textarea>
     	</div>
 
-    	<div class="span6">
-    		<span  class="label label-info" >填報時間設定</span>
-    		 <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='beg_date'  class='span3'   value="<{$data.beg_date}>" placeholder="指定開始日期">~
-    		  <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='end_date'  class='span3'   value="<{$data.end_date}>" placeholder="指定截止日期">
-    		 <br />
+    	<div class="col-md-6">
+        <div class="container">
+          <div class='row'>
+      		<h4>填報時間設定</h4>
+      		 <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='beg_date'  class='form-control'  value="<{$data.beg_date}>" placeholder="指定開始日期">~
+      		  <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='end_date'  class='form-control'  value="<{$data.end_date}>" placeholder="指定截止日期">
+          </div>
 
-    		<span  class="label label-info" >填報年級限制</span> <br/>
-    		<{foreach  key=key item=grade   from=$data.grade }>
-    		<label class="checkbox">
-   		 <input type="checkbox" name="grade[<{$grade}>]"  value="<{$grade}>" class="grade_select" checked ><{$grade}>年級
-    		</label>
-    		<{/foreach}>
+          <div class='row'>
+      		<h4>填報年級限制</h4>
+      		<{foreach  key=key item=grade   from=$data.grade }>
+      		<label class="checkbox">
+     		 <input type="checkbox" name="grade[<{$grade}>]"  value="<{$grade}>" class="grade_select" checked ><{$grade}>年級
+      		</label>
+      		<{/foreach}>
+          </div>
 
     		<div>
     		<span  class="label label-info" >人數限制</span>    <br/>
      		<label>正取</label>
-			<input class="span1" name="txtGet"  type="text"  value="10" title="正取人數"  placeholder="正取人數">
+			<input class="col-md-1 col-xs-1" name="txtGet"  type="text"  value="10" title="正取人數"  placeholder="正取人數">
 		<label>備取</label>
-			<input class="span1" name="txtGetMore"   value="0" type="text" title="備取人數" placeholder="備取人數">
+			<input class="col-md-1 col-xs-1" name="txtGetMore"   value="0" type="text" title="備取人數" placeholder="備取人數">
 		</div>
 
 		<!--  擷取學生資料  -->
@@ -64,36 +65,40 @@
       </div>
 
  </div>
+ </div>
+
+
+ <div class="row">
 
 
      <!--  項目別  -->
      <h4  >額外輸入欄位</h4>
 
-    <div class="row-fluid  alert-success"  id="field">
-    	<div class="row-fluid" >
- 	<span class="span2"><span class="label">代碼</span> </span>
-  	<span class="span2"><span class="label">欄名</span></span>
-	<span class="span1"><span class="label">格式</span></span>
-	<span class="span1"><span class="label">欄寬1~3</span></span>
-	<span class="span3"><span class="label">預設值</span></span>
+    <div class="row  alert-success"  id="field">
+    	<div class="row" >
+ 	<span class="col-md-2 col-xs-2"><span class="label">代碼</span> </span>
+  	<span class="col-md-2 col-xs-2"><span class="label">欄名</span></span>
+	<span class="col-md-1 col-xs-1"><span class="label">格式</span></span>
+	<span class="col-md-1 col-xs-1"><span class="label">欄寬1~3</span></span>
+	<span class="col-md-3 col-xs-3"><span class="label">預設值</span></span>
 	</div>
 	<{section name=ti  start=1  loop=$DEF_SET.fields   step=1  }>
 
-    	<div  class="row-fluid">
+    	<div  class="row">
 
-        <span class="span2"><span class="badge badge-info"><{$smarty.section.ti.index}></span>
-        <input class="span6" name="txtItem[]"   value="F<{$smarty.section.ti.index}>" type="text"   title="欄位代碼(英數)" placeholder="欄位代碼(英數)"> </span>
-  	<span class="span2"><input class="span10" name="txtItemName[]" type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span>
-  	<span class="span1">
-               <select class="span10" name="selI_Mode[]">
+        <span class="col-md-2 col-xs-2"><span class="badge badge-info"><{$smarty.section.ti.index}></span>
+        <input class="col-md-6 col-xs-6" name="txtItem[]"   value="F<{$smarty.section.ti.index}>" type="text"   title="欄位代碼(英數)" placeholder="欄位代碼(英數)"> </span>
+  	<span class="col-md-2 col-xs-2"><input class="col-md-1 col-xs-10" name="txtItemName[]" type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span>
+  	<span class="col-md-1 col-xs-1">
+               <select class="col-md-1 col-xs-10" name="selI_Mode[]">
                 <option value="s">字串</option>
                 <option value="n">數字</option>
                 <option value="d">日期</option>
                 <option value="o">選項</option>
               </select>
         </span>
-        <span class="span1"><input class="span10" name="txtI_Width[]"  value="1" title="1~3" type="text">  </span>
-	<span class="span3"><input class="span10" name="txtI_def[]" type="text"  title="預設值(選項時，以逗號分隔)" placeholder="預設值(選項時，以逗號分隔)">     </span>
+        <span class="col-md-1 col-xs-1"><input class="col-md-1 col-xs-10" name="txtI_Width[]"  value="1" title="1~3" type="text">  </span>
+	<span class="col-md-3 col-xs-3"><input class="col-md-1 col-xs-10" name="txtI_def[]" type="text"  title="預設值(選項時，以逗號分隔)" placeholder="預設值(選項時，以逗號分隔)">     </span>
 	</div>
  	<{ /section }>
 
@@ -119,6 +124,8 @@
 </div>
 
 </div>
+
+</div>
 	<script>
 	function check_1() {
 		//alert ($("#assn").val() ) ;
@@ -133,16 +140,16 @@
 <{ else  }>
 <!----- 編修模式---------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 <{foreach  key=key item=sign   from=$data.edit_kind  }>
-<div class="row-fluid">
+<div class="row">
     <form class="form-inline"  action="add_kind.php" method="post">
     <fieldset>
     <legend>修改報名表</legend>
     <!--  報表名別  -->
-    <div class="row-fluid">
-    	<div class="span6">
+    <div class="row">
+    	<div class="col-md-6 col-xs-6">
 		<div>
     		<label>報名表名稱</label>
-    		<input type="text" name="doc_title" placeholder="報名表名稱" value="<{$sign.title}>" class='span8'>
+    		<input type="text" name="doc_title" placeholder="報名表名稱" value="<{$sign.title}>" class='col-md-8 col-xs-8'>
     		</div>
 
 
@@ -150,14 +157,14 @@
  		<div>
      		<label>說 明：</label>
      		</div>
-    		<textarea class="span10" rows="4"  name="txtDoc" placeholder="填表時說明內容 ..... "   ><{$sign.doc}></textarea>
+    		<textarea class="col-md-1 col-xs-10" rows="4"  name="txtDoc" placeholder="填表時說明內容 ..... "   ><{$sign.doc}></textarea>
 
     	</div>
 
-    	<div class="span6">
+    	<div class="col-md-6 col-xs-6">
     		<span  class="label label-info" >填報時間設定</span>
-    		 <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='beg_date'  class='span3'   value="<{$sign.beg_date}>" placeholder="指定開始日期">~
-    		  <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='end_date'  class='span3'   value="<{$sign.end_date}>" placeholder="指定截止日期">
+    		 <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='beg_date'  class='col-md-3 col-xs-3'   value="<{$sign.beg_date}>" placeholder="指定開始日期">~
+    		  <input type='text'  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  name='end_date'  class='col-md-3 col-xs-3'   value="<{$sign.end_date}>" placeholder="指定截止日期">
     		 <br />
 
     		<span  class="label label-info" >填報年級限制</span> <br/>
@@ -172,9 +179,9 @@
     		<div>
     		<span  class="label label-info" >人數限制</span>    <br/>
      		<label>正取</label>
-			<input class="span1" name="txtGet"  type="text"    title="正取人數"  placeholder="正取人數" value="<{$sign.stud_get}>" >
+			<input class="col-md-1 col-xs-1" name="txtGet"  type="text"    title="正取人數"  placeholder="正取人數" value="<{$sign.stud_get}>" >
 		<label>備取</label>
-			<input class="span1" name="txtGetMore"  type="text" title="備取人數" placeholder="備取人數"  value="<{$sign.stud_get_more}>">
+			<input class="col-md-1 col-xs-1" name="txtGetMore"  type="text" title="備取人數" placeholder="備取人數"  value="<{$sign.stud_get_more}>">
 		</div>
 
 		<!--  擷取學生資料  -->
@@ -195,31 +202,31 @@
 
      <!--  項目別  -->
      <h4  >額外輸入欄位</h4>
-    <div class="row-fluid  alert-success"  id="field">
-    	<div class="row-fluid" >
- 	<span class="span2"><span class="label">代碼</span> </span>
-  	<span class="span2"><span class="label">欄名</span></span>
-	<span class="span1"><span class="label">格式</span></span>
-	<span class="span1"><span class="label">欄寬1~3</span></span>
-	<span class="span3"><span class="label">預設值</span></span>
+    <div class="row  alert-success"  id="field">
+    	<div class="row" >
+ 	<span class="col-md-2 col-xs-2"><span class="label">代碼</span> </span>
+  	<span class="col-md-2 col-xs-2"><span class="label">欄名</span></span>
+	<span class="col-md-1 col-xs-1"><span class="label">格式</span></span>
+	<span class="col-md-1 col-xs-1"><span class="label">欄寬1~3</span></span>
+	<span class="col-md-3 col-xs-3"><span class="label">預設值</span></span>
 	</div>
 	<{section name=ti  start=1  loop=$DEF_SET.fields   step=1  }>
 	<{assign var="nti" value=$smarty.section.ti.index }>
-    	<div  class="row-fluid">
+    	<div  class="row">
 
-        <span class="span2"><span class="badge badge-info"><{$nti}></span>
-        <input class="span6" name="txtItem[]"   value="<{$sign.field_input[$nti][0]}>" type="text"   title="欄位代碼(英數)" placeholder="欄位代碼(英數)"> </span>
-  	<span class="span2"><input class="span10"  name="txtItemName[]"  value="<{$sign.field_input[$nti][1] }>"  type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span>
-  	<span class="span1">
-               <select class="span10" name="selI_Mode[]">
+        <span class="col-md-2 col-xs-2"><span class="badge badge-info"><{$nti}></span>
+        <input class="col-md-6 col-xs-6" name="txtItem[]"   value="<{$sign.field_input[$nti][0]}>" type="text"   title="欄位代碼(英數)" placeholder="欄位代碼(英數)"> </span>
+  	<span class="col-md-2 col-xs-2"><input class="col-md-1 col-xs-10"  name="txtItemName[]"  value="<{$sign.field_input[$nti][1] }>"  type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span>
+  	<span class="col-md-1 col-xs-1">
+               <select class="col-md-1 col-xs-10" name="selI_Mode[]">
                 <option value="s"  <{ if ($sign.field_input[$nti][2]=='s') }>selected <{/if}> >字串</option>
                 <option value="n" <{ if ($sign.field_input[$nti][2]=='n') }>selected <{/if}>>數字</option>
                 <option value="d" <{ if ($sign.field_input[$nti][2]=='d') }>selected <{/if}>>日期</option>
                 <option value="o" <{ if ($sign.field_input[$nti][2]=='o') }>selected <{/if}>>選項</option>
               </select>
         </span>
-        <span class="span1"><input class="span10" name="txtI_Width[]"  value="<{$sign.field_input[$nti][3]}>" title="1~3" type="text">  </span>
-	<span class="span3"><input class="span10" name="txtI_def[]" type="text"  value="<{$sign.field_input[$nti][4]}>" title="預設值(選項時，以逗號分隔)" placeholder="預設值(選項時，以逗號分隔)">     </span>
+        <span class="col-md-1 col-xs-1"><input class="col-md-1 col-xs-10" name="txtI_Width[]"  value="<{$sign.field_input[$nti][3]}>" title="1~3" type="text">  </span>
+	<span class="col-md-3 col-xs-3"><input class="col-md-1 col-xs-10" name="txtI_def[]" type="text"  value="<{$sign.field_input[$nti][4]}>" title="預設值(選項時，以逗號分隔)" placeholder="預設值(選項時，以逗號分隔)">     </span>
 	</div>
  	<{ /section }>
 
