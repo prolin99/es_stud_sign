@@ -4,22 +4,20 @@
 // 製作日期：2014-03-01
 // $Id:$
 // ------------------------------------------------------------------------- //
-$i=0 ;
+$i = 0;
 $adminmenu[$i]['title'] = '報名管理';
-$adminmenu[$i]['link'] = "admin/index.php";
-$adminmenu[$i]['desc'] = '報名管理' ;
-$adminmenu[$i]['icon'] = 'images/admin/home.png' ;
+$adminmenu[$i]['link'] = 'admin/index.php';
+$adminmenu[$i]['desc'] = '報名管理';
+$adminmenu[$i]['icon'] = 'images/admin/home.png';
 
-$i++ ;
-$adminmenu[$i]['title'] = "增修報名表";
-$adminmenu[$i]['link'] = "admin/add_kind.php";
+++$i;
+$adminmenu[$i]['title'] = '增修報名表';
+$adminmenu[$i]['link'] = 'admin/add_kind.php';
 $adminmenu[$i]['desc'] = '增修報名表';
 $adminmenu[$i]['icon'] = 'images/admin/logadm.png';
 
-$i++ ;
-$adminmenu[$i]['title'] = "關於";
-$adminmenu[$i]['link'] = "admin/about.php";
+++$i;
+$adminmenu[$i]['title'] = '關於';
+$adminmenu[$i]['link'] = 'admin/about.php';
 $adminmenu[$i]['desc'] = '說明';
 $adminmenu[$i]['icon'] = 'images/admin/about.png';
-
-?>
