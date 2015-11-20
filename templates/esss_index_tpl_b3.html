@@ -1,3 +1,4 @@
+
 <{$toolbar}>
   <script language='javascript' type='text/javascript' src='<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js'></script>
 
@@ -9,11 +10,11 @@
       <{ if ($data.admin) }>
         <form action="index.php?id=<{ $sign.id }>" method="post">
           <div class='row'>
-            <span class='col-md-2 col-xs-2'>班級：</span>
-            <span class='col-md-4 col-xs-4'>
+            <span class='col-md-2 col-xs-3'>班級：</span>
+            <span class='col-md-4 col-xs-5'>
               <{html_options name="admin_class_id" class="form-control" options=$data.class_list_c selected=$data.sel_class onchange="submit();" }>
             </span>
-            <span class="alert alert-danger col-md-3 col-xs-3">管理員權限!!!!</span>
+            <span class="alert alert-danger col-md-3 col-xs-4">管理員權限!!!!</span>
           </div>
         </form>
         <{else}>
@@ -45,14 +46,9 @@
                   </div>
                   <{/if}>
                     <!--    輸入欄          -->
+                  <h5>正取資料輸入(直接輸入座號，自動轉換姓名)</h5>
                     <div class="row">
-                      <div class="col-md-6 col-xs-6">
-                        <h5>正取資料輸入(直接輸入座號，自動轉換姓名)</h5>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <span class="label label-info col-xs-3"> 順序. 座號</span>
+                      <span class="label label-info col-xs-4"> 順序. 座號</span>
                       <{foreach key=key item=fi from=$sign.field_input }>
                         <span class="label label-info col-md-<{$fi[3]}> col-xs-<{$fi[3]}>">
                           <{$fi[1]}>
@@ -65,11 +61,8 @@
                     <{section name=ti start=0 loop=$sign.stud_get step=1 }>
 
                       <div class="row" ord_id="<{$i}>">
-                        <span class="col-xs-1">
-                          <{$i}>
-                        </span>
-                        <span class="col-xs-2">
-                          <input class="form-control sitid" style="width:95%;" id="sitid_<{$i}>" name="num_id[<{$i}>]" value="<{$data.my_class[$data.sel_class][$i].stud_name }>" type="text" title="座號才能擷取出資料" placeholder="座號或姓名" data="<{$sign.get_data_item}>">
+                        <span class="col-xs-4">
+                          <input class="form-control sitid"  id="sitid_<{$i}>" name="num_id[<{$i}>]" value="<{$data.my_class[$data.sel_class][$i].stud_name }>" type="text" title="<{$i}>.座號才能擷取出資料" placeholder="<{$i}>.座號或姓名" data="<{$sign.get_data_item}>">
                         </span>
                         <!--     需輸入欄         -->
                         <{foreach key=key item=fi from=$sign.field_input }>
@@ -129,13 +122,8 @@
 
                             <div class="row" ord_id="<{$i}>">
 
-                              <span class="col-xs-1 col-xs-1">
-                                <span class="badge badge-info">
-                                  <{$i}>
-                                </span>
-                              </span>
-                              <span class="col-md-2 col-xs-3">
-                                <input class="form-control sitid" id="sitid_<{$i}>" name="num_id[<{$i}>]" value="<{$data.my_class[$data.sel_class][$i].stud_name }>" type="text" title="座號才能擷取出資料" placeholder="座號或姓名" data="<{$sign.get_data_item}>">
+                              <span class="col-md-2 col-xs-4">
+                                <input class="form-control sitid" id="sitid_<{$i}>" name="num_id[<{$i}>]" value="<{$data.my_class[$data.sel_class][$i].stud_name }>" type="text" title="<{$i}>.座號才能擷取出資料" placeholder="<{$i}>.座號或姓名" data="<{$sign.get_data_item}>">
                               </span>
                               <!--     需輸入欄(由報名報)         -->
                               <{foreach key=key item=fi from=$sign.field_input }>
@@ -215,9 +203,8 @@
                     var tid = $(this).attr('id');
                     var sit_id = $(this).val();
                     var get_f = $(this).attr('data');
-                    getdata( < {
-                      $data.sel_class
-                    } > , tid, sit_id, get_f);
+                    //alert (sit_id) ;
+                    getdata( <{$data.sel_class}> , tid, sit_id, get_f);
                   });
                 });
 
@@ -236,9 +223,7 @@
                     var j = i;
                     var ii = j * 1 + 1;
                     //alert( ii + '    '+ splits[i]) ;
-                    getdata( < {
-                      $data.sel_class
-                    } > , 'sitid_' + ii, splits[i], get_f);
+                    getdata( <{$data.sel_class }> , 'sitid_' + ii, splits[i], get_f);
                   }
                 }
 
@@ -284,15 +269,13 @@
 
                     var sit_id = $(this).val();
                     var get_f = $(this).attr('data');
-                    //alert(get_f ) ;
+                  //  alert(get_f ) ;
                     var splits = sit_id.split(" ");
                     for (var i in splits) {
                       var j = i;
                       var ii = j * 1 + 1;
                       //alert( ii + '    '+ splits[i]) ;
-                      getdata( < {
-                        $data.sel_class
-                      } > , 'sitid_' + ii, splits[i], get_f);
+                      getdata( <{ $data.sel_class  }> , 'sitid_' + ii, splits[i], get_f);
                     }
                   });
                 });
