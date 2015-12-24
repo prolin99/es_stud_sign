@@ -89,7 +89,7 @@ if ($_POST['Submit_emp'] == 'empt') {
 /*-----------執行動作判斷區----------*/
 //取得任教班級
 $class_id = get_my_class_id();
-
+//echo 'clllllll--'  . $class_id ;
  if ($_GET['id']) {
      $id = intval($_GET['id']);
 
@@ -126,9 +126,9 @@ $class_id = get_my_class_id();
         }
 
         if (!in_array($grade, $data['kind_in'][$id]['grade'])) {
-            $xoopsTpl->assign('no_bootstrap_v2', $_SESSION['bootstrap'] >= 3);
+            redirect_header('index.php', 3, '貴班無需填報');
         }
-        redirect_header('index.php', 3, '貴班無需填報');
+        $xoopsTpl->assign('no_bootstrap_v2', $_SESSION['bootstrap'] >= 3);
     }
 
     //取得現在班級姓名
