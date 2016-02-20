@@ -89,17 +89,14 @@
           <!--  bottom -->
 
           <!--  項目別  -->
-          <h4>額外輸入欄位</h4>
+          <h4>額外輸入欄位(在填報時需要自行輸入資料部份)</h4>
 
           <div class="col-md-12  alert-success" id="field">
             <div class="row">
               <span class="col-md-2 col-xs-3">
-                <span class="label label-default">代碼</span>
+                <span class="label label-default">名稱</span>
               </span>
               <span class="col-md-2 col-xs-3">
-                <span class="label label-default">欄名</span>
-              </span>
-              <span class="col-md-1 col-xs-2">
                 <span class="label label-default">格式</span>
               </span>
               <span class="col-md-1 col-xs-3">
@@ -114,10 +111,8 @@
               <div class="row">
 
                 <span class="col-md-2 col-xs-3">
-                  <input class="form-control" name="txtItem[]" value="F<{$smarty.section.ti.index}>" type="text" title="欄位代碼(英數)" placeholder="欄位代碼(英數)"> </span>
-                <span class="col-md-2 col-xs-3">
                   <input class="form-control" name="txtItemName[]" type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span>
-                <span class="col-md-1 col-xs-3">
+                <span class="col-md-2 col-xs-3">
                   <select class="form-control" name="selI_Mode[]">
                     <option value="s">字串</option>
                     <option value="n">數字</option>
@@ -265,13 +260,11 @@
                 <h4>額外輸入欄位</h4>
                 <div class="col-md-12  success" id="field">
                   <div class="row">
+
                     <span class="col-md-2 col-xs-3">
-                      <span class="label label-default">代碼</span>
+                      <span class="label label-default">名稱</span>
                     </span>
                     <span class="col-md-2 col-xs-3">
-                      <span class="label label-default">欄名</span>
-                    </span>
-                    <span class="col-md-1 col-xs-3">
                       <span class="label label-default">格式</span>
                     </span>
                     <span class="col-md-1 col-xs-3">
@@ -286,10 +279,8 @@
                       <div class="row">
 
                         <span class="col-md-2 col-xs-3">
-                          <input class="form-control" name="txtItem[]" value="<{$sign.field_input[$nti][0]}>" type="text" title="欄位代碼(英數)" placeholder="欄位代碼(英數)"> </span>
-                        <span class="col-md-2 col-xs-3">
                           <input class="form-control" name="txtItemName[]" value="<{$sign.field_input[$nti][1] }>" type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span>
-                        <span class="col-md-1 col-xs-3">
+                        <span class="col-md-2 col-xs-3">
                           <select class="form-control" name="selI_Mode[]">
                             <option value="s" <{ if ($sign.field_input[$nti][2]=='s' ) }>selected
                               <{/if}> >字串</option>

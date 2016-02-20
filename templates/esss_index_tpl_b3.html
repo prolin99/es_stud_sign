@@ -69,40 +69,36 @@
                           <{ if ($fi[2]=='d' ) }>
                             <!--     日期       -->
                             <span class="col-md-<{$fi[3]}> col-xs-<{$fi[3]}>">
-                              <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>" <{if $data.my_class[$data.sel_class][$i].stud_name }>
+                              <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>"
+                              <{if $data.my_class[$data.sel_class][$i].stud_name }>
                               <{assign var="bar" value="in_$fi[0]" }>
-                                value="
-                                <{$data.my_class[$data.sel_class][$i][$bar] }>"
-                                  <{else}>
-                                    value="
-                                    <{$fi[4]}>"
-                                      <{/if}>
-                                        onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" mode="
-                                        <{$fi[2]}>">
+                                value="<{$data.my_class[$data.sel_class][$i][$bar] }>"
+                              <{else}>
+                                value="<{$fi[4]}>"
+                              <{/if}>
+                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" mode="<{$fi[2]}>">
                             </span>
                             <{elseif ($fi[2]=='o' ) }>
                               <!--     下拉       -->
                               <span class="col-md-<{$fi[3]}>  col-xs-<{$fi[3]}>  ">
                                 <{if $data.my_class[$data.sel_class][$i].stud_name }>
                                   <{assign var="bar" value="in_$fi[0]" }>
-                                    <{assign var="my_selected" value=$data.my_class[$data.sel_class][$i][$bar] }>
-                                      <{else}>
-                                        <{assign var="my_selected" value=0 }>
-                                          <{/if}>
-                                            <{html_options name="in_$fi[0][$i]" options=$fi[5] selected=$my_selected class="form-control self_input" }>
+                                  <{assign var="my_selected" value=$data.my_class[$data.sel_class][$i][$bar] }>
+                              <{else}>
+                                <{assign var="my_selected" value=0 }>
+                              <{/if}>
+                              <{html_options name="in_$fi[0][$i]" options=$fi[5] selected=$my_selected class="form-control self_input" }>
                               </span>
                               <{else}>
                                 <span class="col-md-<{$fi[3]}> col-xs-<{$fi[3]}>">
-                                  <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>" <{if $data.my_class[$data.sel_class][$i].stud_name }>
-                                  <{assign var="bar" value="in_$fi[0]" }>
-                                    value="
-                                    <{$data.my_class[$data.sel_class][$i][$bar] }>"
-                                      <{else}>
-                                        value="
-                                        <{$fi[4]}>"
-                                          <{/if}>
-                                            mode="
-                                            <{$fi[2]}>">
+                                  <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>"
+                                  <{if $data.my_class[$data.sel_class][$i].stud_name }>
+                                    <{assign var="bar" value="in_$fi[0]" }>
+                                    value="<{$data.my_class[$data.sel_class][$i][$bar] }>"
+                                  <{else}>
+                                        value="<{$fi[4]}>"
+                                  <{/if}>
+                                            mode="<{$fi[2]}>">
                                 </span>
                                 <{/if}>
                                   <{/foreach}>
@@ -130,16 +126,14 @@
                                 <{ if ($fi[2]=='d' ) }>
                                   <!--     日期欄         -->
                                   <span class="col-md-<{$fi[3]}> col-xs-<{$fi[3]}>">
-                                    <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>" <{if $data.my_class[$data.sel_class][$i].stud_name }>
-                                    <{assign var="bar" value="in_$fi[0]" }>
-                                      value="
-                                      <{$data.my_class[$data.sel_class][$i][$bar] }>"
-                                        <{else}>
-                                          value="
-                                          <{$fi[4]}>"
-                                            <{/if}>
-                                              onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" mode="
-                                              <{$fi[2]}>">
+                                    <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>"
+                                    <{if $data.my_class[$data.sel_class][$i].stud_name }>
+                                      <{assign var="bar" value="in_$fi[0]" }>
+                                      value="<{$data.my_class[$data.sel_class][$i][$bar] }>"
+                                    <{else}>
+                                      value="<{$fi[4]}>"
+                                    <{/if}>
+                                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" mode="<{$fi[2]}>">
                                   </span>
                                   <{elseif ($fi[2]=='o' ) }>
                                     <{if $data.my_class[$data.sel_class][$i].stud_name }>
@@ -156,14 +150,11 @@
                                                   <span class="col-md-<{$fi[3]}> col-xs-<{$fi[3]}>">
                                                     <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>" <{if $data.my_class[$data.sel_class][$i].stud_name }>
                                                     <{assign var="bar" value="in_$fi[0]" }>
-                                                      value="
-                                                      <{$data.my_class[$data.sel_class][$i][$bar] }>"
+                                                      value="<{$data.my_class[$data.sel_class][$i][$bar] }>"
                                                         <{else}>
-                                                          value="
-                                                          <{$fi[4]}>"
+                                                          value="<{$fi[4]}>"
                                                             <{/if}>
-                                                              mode="
-                                                              <{$fi[2]}>">
+                                                              mode="<{$fi[2]}>">
                                                   </span>
                                                   <{/if}>
                                                     <{/foreach}>

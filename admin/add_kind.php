@@ -20,8 +20,8 @@ include_once '../function.php';
 //新建一期
 if ($_POST['ADD']) {
     $myts = &MyTextSanitizer::getInstance();
-    $title = $myts->addSlashes($_POST['doc_title']);
-    $doc = $myts->addSlashes($_POST['txtDoc']);
+    $title = trim($myts->addSlashes($_POST['doc_title']));
+    $doc = trim($myts->addSlashes($_POST['txtDoc']));
     $beg_date = $_POST['beg_date'];
     $end_date = $_POST['end_date'];
     foreach ($_POST['grade'] as $k => $v) {
@@ -35,7 +35,9 @@ if ($_POST['ADD']) {
 
     foreach ($_POST['txtItemName'] as $k => $v) {
         if ($v) {
-            $input_data_item .= $_POST['txtItem'][$k].'__'.$v.'__'.$_POST['selI_Mode'][$k].'__'.$_POST['txtI_Width'][$k].'__'.$_POST['txtI_def'][$k].'##';
+            //有欄名
+            //$input_data_item .= $_POST['txtItem'][$k].'__'.$v.'__'.$_POST['selI_Mode'][$k].'__'.$_POST['txtI_Width'][$k].'__'.$_POST['txtI_def'][$k].'##';
+            $input_data_item .= 'F'.($k+1).'__'.$v.'__'.$_POST['selI_Mode'][$k].'__'.$_POST['txtI_Width'][$k].'__'.$_POST['txtI_def'][$k].'##';
         }
     }
 

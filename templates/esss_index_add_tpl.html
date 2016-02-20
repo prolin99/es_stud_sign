@@ -71,7 +71,7 @@
 
     <div class="row-fluid  alert-success"  id="field">
     	<div class="row-fluid" >
- 	<span class="span2"><span class="label">代碼</span> </span>
+
   	<span class="span2"><span class="label">欄名</span></span>
 	<span class="span1"><span class="label">格式</span></span>
 	<span class="span1"><span class="label">欄寬1~3</span></span>
@@ -81,10 +81,11 @@
 
     	<div  class="row-fluid">
 
-        <span class="span2"><span class="badge badge-info"><{$smarty.section.ti.index}></span>
-        <input class="span6" name="txtItem[]"   value="F<{$smarty.section.ti.index}>" type="text"   title="欄位代碼(英數)" placeholder="欄位代碼(英數)"> </span>
-  	<span class="span2"><input class="span10" name="txtItemName[]" type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span>
-  	<span class="span1">
+  	<span class="span2">
+        <span class="badge badge-info"><{$smarty.section.ti.index}></span>
+        <input class="span8" name="txtItemName[]" type="text" title="空白表示不使用" placeholder="欄名,空白則不使用">
+    </span>
+  	<span class="span2">
                <select class="span10" name="selI_Mode[]">
                 <option value="s">字串</option>
                 <option value="n">數字</option>
@@ -145,12 +146,10 @@
     		<input type="text" name="doc_title" placeholder="報名表名稱" value="<{$sign.title}>" class='span8'>
     		</div>
 
-
-
  		<div>
      		<label>說 明：</label>
      		</div>
-    		<textarea class="span10" rows="4"  name="txtDoc" placeholder="填表時說明內容 ..... "   ><{$sign.doc}></textarea>
+    		<textarea class="span12" rows="4"  name="txtDoc" placeholder="填表時說明內容 ..... " ><{$sign.doc}></textarea>
 
     	</div>
 
@@ -197,7 +196,7 @@
      <h4  >額外輸入欄位</h4>
     <div class="row-fluid  alert-success"  id="field">
     	<div class="row-fluid" >
- 	<span class="span2"><span class="label">代碼</span> </span>
+
   	<span class="span2"><span class="label">欄名</span></span>
 	<span class="span1"><span class="label">格式</span></span>
 	<span class="span1"><span class="label">欄寬1~3</span></span>
@@ -206,11 +205,10 @@
 	<{section name=ti  start=1  loop=$DEF_SET.fields   step=1  }>
 	<{assign var="nti" value=$smarty.section.ti.index }>
     	<div  class="row-fluid">
-
-        <span class="span2"><span class="badge badge-info"><{$nti}></span>
-        <input class="span6" name="txtItem[]"   value="<{$sign.field_input[$nti][0]}>" type="text"   title="欄位代碼(英數)" placeholder="欄位代碼(英數)"> </span>
-  	<span class="span2"><input class="span10"  name="txtItemName[]"  value="<{$sign.field_input[$nti][1] }>"  type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span>
-  	<span class="span1">
+  	<span class="span2">
+        <span class="badge badge-info"><{$nti}></span>
+        <input class="span8"  name="txtItemName[]"  value="<{$sign.field_input[$nti][1] }>"  type="text" title="空白表示不使用" placeholder="欄名,空白則不使用"> </span>
+  	<span class="span2">
                <select class="span10" name="selI_Mode[]">
                 <option value="s"  <{ if ($sign.field_input[$nti][2]=='s') }>selected <{/if}> >字串</option>
                 <option value="n" <{ if ($sign.field_input[$nti][2]=='n') }>selected <{/if}>>數字</option>
