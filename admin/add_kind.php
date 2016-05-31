@@ -53,14 +53,14 @@ if ($_POST['ADD']) {
 			values ( '$title' , '$doc' ,  '$beg_date' , '$end_date' , '$input_classY' , '$stud_get' ,'$stud_get_more' , '$get_data_item' , '$input_data_item'  , '$uid'  ) ";
     }
 
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     redirect_header('index.php', 3, '新增一筆報名表....');
 }
 
 if ($_POST['templ']) {
     //複製套用舊表格
     $sql = '  SELECT  *   FROM '.$xoopsDB->prefix('sign_kind')."  where id = '{$_POST['old_templ']}'    ";
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     $row = $xoopsDB->fetchArray($result);
 
     //取得舊資料
@@ -80,7 +80,7 @@ if ($_POST['templ']) {
     $uid = $xoopsUser->uid();
     $sql = ' insert into  '.$xoopsDB->prefix('sign_kind')."  ( title ,  doc ,beg_date , end_date , input_classY  ,stud_get ,stud_get_more ,get_data_item  , input_data_item ,admin )
 			values ( '$title' , '$doc' ,  '$beg_date' , '$end_date' , '$input_classY' , '$stud_get' ,'$stud_get_more' , '$get_data_item' , '$input_data_item'  , '$uid'  ) ";
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     $new_kind_id = $xoopsDB->getInsertId();
     redirect_header("add_kind.php?do=edit&id=$new_kind_id", 3, '複製一筆報名表....');
 }

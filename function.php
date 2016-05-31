@@ -32,7 +32,7 @@ function get_class_list($grade = '')
         $sql = '  SELECT  class_id    FROM '.$xoopsDB->prefix('e_student')."   where INSTR( '$grade' ,SUBSTR(class_id, 1, 1))    group by class_id   ";
     }
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $xoopsDB->error());
     while ($row = $xoopsDB->fetchArray($result)) {
         $data[$row['class_id']] = $row['class_id'];
     }
@@ -45,7 +45,7 @@ function get_class_grade_list()
     //取得全校年級列表
     global  $xoopsDB;
     $sql = '  SELECT  SUBSTR( `class_id` , 1, 1 ) AS grade   FROM '.$xoopsDB->prefix('e_student').'   group by  SUBSTR( `class_id` , 1, 1 )   ';
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $xoopsDB->error());
     while ($row = $xoopsDB->fetchArray($result)) {
         $data[$row['grade']] = $row['grade'];
     }
@@ -66,7 +66,7 @@ function get_class_students($class_id, $mode = 'class')
         $sql = '  SELECT  *  FROM '.$xoopsDB->prefix('e_student')."   where class_id='$class_id'   ORDER BY  `class_sit_num`  ";
     }
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $xoopsDB->error());
     while ($stud = $xoopsDB->fetchArray($result)) {
         $data[$stud['stud_id'] ] = $stud;
     }
@@ -82,7 +82,7 @@ function get_class_all_sit_id($class_id)
 
     $sql = '  SELECT  class_sit_num  FROM '.$xoopsDB->prefix('e_student')."   where class_id='$class_id'   ORDER BY  `class_sit_num`  ";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $xoopsDB->error());
     while ($stud = $xoopsDB->fetchArray($result)) {
         $data .= $stud['class_sit_num'].' ';
     }
@@ -98,7 +98,7 @@ function get_class_teacher_list()
     $sql = '  SELECT  t.uid, t.class_id , u.name  FROM '.$xoopsDB->prefix('e_classteacher').'  t  , '.$xoopsDB->prefix('users').'  u    '.
                    ' where t.uid= u.uid    ';
 
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     while ($data_row = $xoopsDB->fetchArray($result)) {
         $class_id[$data_row['class_id']] = $data_row['name'];
     }
@@ -116,7 +116,7 @@ function get_my_class_id($uid = 0)
     $sql = '  SELECT  class_id  FROM '.$xoopsDB->prefix('e_classteacher').
                    " where uid= '$uid'   ";
 
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     while ($data_row = $xoopsDB->fetchArray($result)) {
         $class_id = $data_row['class_id'];
     }
@@ -150,7 +150,7 @@ function get_sign_kind($id = 0, $mode = 'list', $class_id = 0, $isAdmin = 0)
     }
 
     //echo $sql  ;
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
 
     while ($row = $xoopsDB->fetchArray($result)) {
         //把輸入欄位轉換陣列  D1__dd__d__1__default##
@@ -224,7 +224,7 @@ function check_class_input($kid, $class_id)
     global  $xoopsDB;
     $sql = '  SELECT  count(*) as cc   FROM '.$xoopsDB->prefix('sign_data')." where  kind= '$kid' and  class_id='$class_id'   ";
 
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     while ($row = $xoopsDB->fetchArray($result)) {
         $cc = $row['cc'];
     }
@@ -239,7 +239,7 @@ function get_sign_kind_item()
     global  $xoopsDB;
     $sql = '  SELECT  id, title   FROM '.$xoopsDB->prefix('sign_kind').' order by   id  DESC   ';
 
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     while ($row = $xoopsDB->fetchArray($result)) {
         $data[$row['id']] = $row['title'];
     }
@@ -254,7 +254,7 @@ function sum_sign_data()
     $sql = 'select  kind, count( class_id ) AS cc FROM   '.
             ' (  SELECT  kind , class_id   FROM '.$xoopsDB->prefix('sign_data').' group by kind ,class_id  )ss  GROUP BY kind ';
             //echo $sql ;
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     while ($row = $xoopsDB->fetchArray($result)) {
         $data[$row['kind']] = $row['cc'];
             //echo $row['kind']  .'='.  $row['cc'] ;
@@ -270,7 +270,7 @@ function get_all_sign_list($id)
     global  $xoopsDB;
     //應該班級
     $sql = 'SELECT input_classY  FROM '.$xoopsDB->prefix('sign_kind')." where id= '$id'    ";
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     $row = $xoopsDB->fetchArray($result);
     $class_Y = preg_split('/,/', $row['input_classY']);
 
@@ -279,14 +279,14 @@ function get_all_sign_list($id)
 
     //有填報的班級人數統計
     $sql = '   SELECT  class_id ,count(*) as cc   FROM '.$xoopsDB->prefix('sign_data')." where   kind ='$id' group by class_id   ";
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     while ($row = $xoopsDB->fetchArray($result)) {
         $sign_class[$row['class_id']] = $row['cc'];
     }
 
     //有填報的班級，但為 -99  即無人要報名
     $sql = '   SELECT  class_id ,count(*) as cc   FROM '.$xoopsDB->prefix('sign_data')." where   kind ='$id' and order_pos='-99'  group by class_id   ";
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     while ($row = $xoopsDB->fetchArray($result)) {
         $sign_class_no[$row['class_id']] = $row['cc'];
     }
@@ -316,7 +316,7 @@ function get_sign_data($kind_id, $class_id)
     }
     $sql = '  SELECT  *    FROM '.$xoopsDB->prefix('sign_data')." where kind ='$kind_id'  and order_pos <> -99   $class_sql   order by   class_id,  order_pos    ";
 
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     while ($row = $xoopsDB->fetchArray($result)) {
         //輸入值  D1__dd__d__1__##
             //以 ## 分欄數， 代號__中文欄名__格式__欄寬
@@ -363,10 +363,10 @@ function delete_sign_kind($kind_id)
 
     global  $xoopsDB;
     $sql = '  DELETE    FROM '.$xoopsDB->prefix('sign_data')." where kind ='$kind_id'   ";
-    $result = $xoopsDB->queryF($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->queryF($sql) or die($sql.'<br>'.$xoopsDB->error());
 
     $sql = '  DELETE    FROM '.$xoopsDB->prefix('sign_kind')." where id ='$kind_id'   ";
-    $result = $xoopsDB->queryF($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->queryF($sql) or die($sql.'<br>'.$xoopsDB->error());
 }
 
 function clear_sign_kind($kind_id)
@@ -375,7 +375,7 @@ function clear_sign_kind($kind_id)
 
     global  $xoopsDB;
     $sql = '  DELETE    FROM '.$xoopsDB->prefix('sign_data')." where kind ='$kind_id'   ";
-    $result = $xoopsDB->queryF($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->queryF($sql) or die($sql.'<br>'.$xoopsDB->error());
 }
 
 function get_student_data_array($class_id, $class_sit_id, $tid, $fi)
@@ -384,7 +384,7 @@ function get_student_data_array($class_id, $class_sit_id, $tid, $fi)
         global  $xoopsDB;
     $sql = '  SELECT  *  FROM '.$xoopsDB->prefix('e_student')."   where class_id = '$class_id'  and class_sit_num='$class_sit_id'   ";
 
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     while ($row = $xoopsDB->fetchArray($result)) {
         $data = $row;
     }

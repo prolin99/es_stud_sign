@@ -50,7 +50,7 @@ include_once XOOPS_ROOT_PATH.'/header.php';
              }
             //檢查有無存在
             $sql = '	select id from  '.$xoopsDB->prefix('sign_data')." where kind = '{$_POST['now_kind']}'  and class_id = '{$_POST['now_class']}'  and  order_pos = '$k' ";
-             $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+             $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
              while ($row = $xoopsDB->fetchArray($result)) {
                  $update_id = $row['id'];
              }
@@ -62,11 +62,11 @@ include_once XOOPS_ROOT_PATH.'/header.php';
 				VALUES ({$_POST['now_kind']},$k,'$v', '{$_POST['get_data'][$k]}'  ,'$input' , '{$_POST['now_class']}'   ) ";
              }
 
-             $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+             $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
          } else {
              //移除空白
             $sql = '  DELETE    FROM '.$xoopsDB->prefix('sign_data')." where kind ='{$_POST['now_kind']}'  and class_id = '{$_POST['now_class']}'  and  order_pos = '$k'     ";
-             $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+             $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
          }
      }
  }
@@ -74,7 +74,7 @@ include_once XOOPS_ROOT_PATH.'/header.php';
 if ($_POST['Submit_emp'] == 'empt') {
     //無學生要報名
     $sql = '	select id from  '.$xoopsDB->prefix('sign_data')." where kind = '{$_POST['now_kind']}'  and class_id = '{$_POST['now_class']}'    ";
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     while ($row = $xoopsDB->fetchArray($result)) {
         $update_id = $row['id'];
     }
@@ -82,7 +82,7 @@ if ($_POST['Submit_emp'] == 'empt') {
         //無資料才寫入
         $sql = '	INSERT INTO  '.$xoopsDB->prefix('sign_data')." (  `kind`, `order_pos`,  `class_id`)
 			VALUES ({$_POST['now_kind']}, '-99' , '{$_POST['now_class']}'   ) ";
-        $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+        $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     }
 }
 

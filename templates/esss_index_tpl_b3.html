@@ -17,51 +17,49 @@
             <span class="alert alert-danger col-md-3 col-xs-4">管理員權限!!!!</span>
           </div>
         </form>
-        <{else}>
+      <{else}>
           <h3> 班級：
             <{$data.class_list_c[$data.sel_class] }>
           </h3>
-          <{/if}>
-
+      <{/if}>
 
             <form action="index.php" method="post">
               <fieldset>
-
+                <div class='alert alert-info'>
                 <h3>
                   <{ $sign.title }>
                 </h3>
-                <h5>
                   <{ $sign.doc|nl2br }>
-                </h5>
+                 </div>
                 <!--  尚無輸入資料  -->
                 <{if (! $data.my_class) }>
                   <!--  尚無報名資料   -->
                   <div class="row">
                     <div>快速輸入區(空白做分隔)，移開後會自動擷取資料</div>
                     <span class="col-md-5">
-                      <input type="text" class="form-control" style="width:50%;" id="q_input" placeholder="輸入學生座號，多人時以空白分隔" data="<{$sign.get_data_item}>" title='有修改，移開後會自動擷取資料。'>
+                      <input type="text" class="form-control" style="width:70%;" id="q_input" placeholder="輸入學生座號，多人時以空白分隔" data="<{$sign.get_data_item}>" title='有修改，移開後會自動擷取資料。'>
                     </span>
                     <span class="btn btn-primary">取資料</span>
                     <span class='btn btn-success' onclick='javascript:input_all();' id="btn_all" data="<{$sign.get_data_item}>" title='把全班的學生座號全部填報，用於全體調查表'>全班都填</span>
                   </div>
-                  <{/if}>
+                <{/if}>
                     <!--    輸入欄          -->
                   <h5>正取資料輸入(直接輸入座號，自動轉換姓名)</h5>
                     <div class="row">
-                      <span class="label label-info col-xs-4"> 順序. 座號</span>
+                      <span class="label label-info col-md-2 col-xs-4"> 順序. 座號</span>
                       <{foreach key=key item=fi from=$sign.field_input }>
-                        <span class="label label-info col-md-<{$fi[3]}> col-xs-<{$fi[3]}>">
+                      <span class="label label-info col-md-<{$fi[3]}> col-xs-<{$fi[3]}>">
                           <{$fi[1]}>
-                        </span>
+                      </span>
                         <{/foreach}>
-                          <span class="label label-info col-md-4 col-xs-4">匯出資料欄</span>
+                      <span class="label label-info col-md-4 col-xs-4">匯出資料欄</span>
                     </div>
 
 
                     <{section name=ti start=0 loop=$sign.stud_get step=1 }>
 
                       <div class="row" ord_id="<{$i}>">
-                        <span class="col-xs-4">
+                        <span class="col-md-2 col-xs-4">
                           <input class="form-control sitid"  id="sitid_<{$i}>" name="num_id[<{$i}>]" value="<{$data.my_class[$data.sel_class][$i].stud_name }>" type="text" title="<{$i}>.座號才能擷取出資料" placeholder="<{$i}>.座號或姓名" data="<{$sign.get_data_item}>">
                         </span>
                         <!--     需輸入欄         -->
@@ -78,21 +76,21 @@
                               <{/if}>
                                 onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" mode="<{$fi[2]}>">
                             </span>
-                            <{elseif ($fi[2]=='o' ) }>
+                          <{elseif ($fi[2]=='o' ) }>
                               <!--     下拉       -->
                               <span class="col-md-<{$fi[3]}>  col-xs-<{$fi[3]}>  ">
                                 <{if $data.my_class[$data.sel_class][$i].stud_name }>
                                   <{assign var="bar" value="in_$fi[0]" }>
                                   <{assign var="my_selected" value=$data.my_class[$data.sel_class][$i][$bar] }>
-                              <{else}>
-                                <{assign var="my_selected" value=0 }>
-                              <{/if}>
-                              <{html_options name="in_$fi[0][$i]" options=$fi[5] selected=$my_selected class="form-control self_input" }>
+                                <{else}>
+                                  <{assign var="my_selected" value=0 }>
+                                <{/if}>
+                                <{html_options name="in_$fi[0][$i]" options=$fi[5] selected=$my_selected class="form-control self_input" }>
                               </span>
-                              <{else}>
+                         <{else}>
                                 <span class="col-md-<{$fi[3]}> col-xs-<{$fi[3]}>">
                                   <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>"
-                                  <{if $data.my_class[$data.sel_class][$i].stud_name }>
+                                  <{if ($data.my_class[$data.sel_class][$i].stud_name) }>
                                     <{assign var="bar" value="in_$fi[0]" }>
                                     value="<{$data.my_class[$data.sel_class][$i][$bar] }>"
                                   <{else}>
@@ -100,12 +98,12 @@
                                   <{/if}>
                                             mode="<{$fi[2]}>">
                                 </span>
-                                <{/if}>
-                                  <{/foreach}>
+                         <{/if}>
+                        <{/foreach}>
                                     <!--     擷取欄         -->
-                                    <span class="col-md-4 col-xs-4" id="get_<{$i}>">
-                                      <{$data.my_class[$data.sel_class][$i].get_hide }>
-                                    </span>
+                        <span class="col-md-4 col-xs-4" id="get_<{$i}>">
+                              <{$data.my_class[$data.sel_class][$i].get_hide }>
+                        </span>
 
                       </div>
                       <!-- <{$i++}> -->
@@ -307,19 +305,19 @@
                     <{$i++}>
                       <{foreach key=key item=sign from=$data.kind }>
                         <{if ($sign.cando) }>
-                          <div class="row  alert-success">
+                          <div class="row">
 
                             <span class="col-md-1 col-xs-2">
                               <{if ($sign.need) }>
                                 <{if ($sign.inputed) }>
                                   <a class="btn btn-info" href="index.php?id=<{$sign.id}>" title="已填寫過，再次修正！">修改</a>
 
-                                  <{else}>
+                                <{else}>
                                     <a class="btn btn-success" href="index.php?id=<{$sign.id}>" title="第一次輸入！">報名</a>
-                                    <{/if}>
-                                      <{else}>
+                                <{/if}>
+                              <{else}>
                                         <span class="label label-default" title="所在的年級無需填報">無需填報</span>
-                                        <{/if}>
+                              <{/if}>
                             </span>
 
                             <{ else }>

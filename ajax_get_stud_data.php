@@ -7,7 +7,7 @@ include_once 'header.php';
 if ($_GET['class_sit_id']) {
     $sql = '  SELECT  *  FROM '.$xoopsDB->prefix('e_student')."   where class_id = '{$_GET['class_id']}'  and class_sit_num='{$_GET['class_sit_id']}'   ";
 
-    $result = $xoopsDB->query($sql) or die($sql.'<br>'.mysql_error());
+    $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
     while ($row = $xoopsDB->fetchArray($result)) {
         $data = $row;
     }
