@@ -8,7 +8,7 @@
 
 //$xoopsOption['template_main'] = "esss_index_tpl.html";
 include_once 'header.php';
-$xoopsOption['template_main'] = set_bootstrap('esss_index_tpl.html');
+$xoopsOption['template_main'] = set_bootstrap('esss_index.tpl');
 include_once XOOPS_ROOT_PATH.'/header.php';
 
  if (!$xoopsUser) {

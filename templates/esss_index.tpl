@@ -25,7 +25,7 @@
 
             <form action="index.php" method="post">
               <fieldset>
-                <div class='alert alert-info'>
+                <div class='row alert alert-info'>
                 <h3>
                   <{ $sign.title }>
                 </h3>
@@ -34,8 +34,8 @@
                 <!--  尚無輸入資料  -->
                 <{if (! $data.my_class) }>
                   <!--  尚無報名資料   -->
-                  <div class="row">
-                    <div>快速輸入區(空白做分隔)，移開後會自動擷取資料</div>
+                  <div class="row alert alert-success">
+                    <div>快速輸入區(空白做分隔)，移開後會自動擷取資料，但還未完成報名。</div>
                     <span class="col-md-5">
                       <input type="text" class="form-control" style="width:70%;" id="q_input" placeholder="輸入學生座號，多人時以空白分隔" data="<{$sign.get_data_item}>" title='有修改，移開後會自動擷取資料。'>
                     </span>

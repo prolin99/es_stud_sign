@@ -5,8 +5,7 @@
 // $Id:$
 // ------------------------------------------------------------------------- //
 /*-----------引入檔案區--------------*/
-include_once 'header_admin.php';
-
+include_once 'header.php';
 include_once '../function.php';
 
 include_once '../../tadtools/PHPExcel.php';
@@ -144,6 +143,7 @@ if ($_GET['mid']) {
 
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
     //$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+    ob_clean();
     $objWriter->save('php://output');
     exit;
 }

@@ -8,7 +8,7 @@
 //---基本設定---//
 
 $modversion['name'] = '班級報名';                //模組名稱
-$modversion['version'] = '1.2';                //模組版次
+$modversion['version'] = '1.3';                //模組版次
 $modversion['author'] = 'prolin(prolin@tn.edu.tw)';        //模組作者
 $modversion['description'] = '以班級為單位報名';            //模組說明
 $modversion['credits'] = 'prolin';                //模組授權者
@@ -44,32 +44,20 @@ $modversion['hasMain'] = 1;
 //---樣板設定---要有指定，才會編譯動作，//
 $modversion['templates'] = array();
 $i = 1;
-$modversion['templates'][$i]['file'] = 'esss_index_tpl.html';
-$modversion['templates'][$i]['description'] = 'esss_index_tpl.html';
-++$i;
-$modversion['templates'][$i]['file'] = 'esss_index_tpl_b3.html';
-$modversion['templates'][$i]['description'] = 'esss_index_tpl_b3.html';
+$modversion['templates'][$i]['file'] = 'esss_index.tpl';
+$modversion['templates'][$i]['description'] = 'esss_index.tpl';
+
 
 ++$i;
 $modversion['templates'][$i]['file'] = 'esss_index_add_tpl.html';
 $modversion['templates'][$i]['description'] = 'esss_index_add_tpl.html';
-++$i;
-$modversion['templates'][$i]['file'] = 'esss_index_add_tpl_b3.html';
-$modversion['templates'][$i]['description'] = 'esss_index_add_tpl_b3.html';
+
 
 ++$i;
 $modversion['templates'][$i]['file'] = 'esss_index_adm_tpl.html';
 $modversion['templates'][$i]['description'] = 'esss_index_adm_tpl.html';
-++$i;
-$modversion['templates'][$i]['file'] = 'esss_index_adm_tpl_b3.html';
-$modversion['templates'][$i]['description'] = 'esss_index_adm_tpl_b3.html';
 
- ++$i;
-$modversion['templates'][$i]['file'] = ' esss_adm_alllist_tpl.html';
-$modversion['templates'][$i]['description'] = ' esss_adm_alllist_tpl.html';
-++$i;
-$modversion['templates'][$i]['file'] = ' esss_adm_alllist_tpl_b3.html';
-$modversion['templates'][$i]['description'] = ' esss_adm_alllist_tpl_b3.html';
+
 
 $i = 0;
 //偏好設定
