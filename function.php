@@ -342,13 +342,11 @@ function get_sign_data($kind_id, $class_id)
                 $show_data .= '<span class=\'label label-default\'>'.$fv.'</span>';
             }
         }
-        if ($_SESSION['bootstrap'] == '3') {
-            $row['get_hide'] = "<span class='label label-danger del'><span class='glyphicon glyphicon-remove' title='刪除'></span></span>
+ 
+            $row['get_hide'] = "<span class='label label-danger del'><span class='fa fa-remove' title='刪除'></span></span>
                 $show_data
                 <input type='hidden' name='get_data[".$row['order_pos']."]'  id='get_data_".$row['order_pos']."' value='".$row['data_get']."'  > ";
-        } else {
-            $row['get_hide'] = "<span class='label del'><i class='icon-remove' title='刪除'></i></span>$show_data<input type='hidden' name='get_data[".$row['order_pos']."]'  id='get_data_".$row['order_pos']."' value='".$row['data_get']."'  > ";
-        }
+
         $row['get_field_2'] = $get_stud_data;
             //$data[$row['class_id']][$row['order_pos']] = $row ;
             $data[$row['class_id']][$row['order_pos']] = $row;

@@ -99,7 +99,7 @@ if ($_POST['btn_clear'] == 'clear') {
 
 if ($_GET['do'] == 'edit' and $_GET['id']) {
     //要編修表單
-    $data['edit_kind'] = get_sign_kind($_GET['id']);
+    $data['edit_kind'] = get_sign_kind($_GET['id']+0);
     //檢查是否為擁用者，或系統管理員
     $uid = $xoopsUser->uid();
 
