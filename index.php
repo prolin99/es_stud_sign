@@ -5,10 +5,10 @@
 // $Id:$
 // ------------------------------------------------------------------------- //
 /*-----------引入檔案區--------------*/
-
+use XoopsModules\Tadtools\Utility;
 //$xoopsOption['template_main'] = "esss_index_tpl.html";
 include_once 'header.php';
-$xoopsOption['template_main'] = set_bootstrap('esss_index.tpl');
+$xoopsOption['template_main'] = 'esss_index.tpl';
 include_once XOOPS_ROOT_PATH.'/header.php';
 
  if (!$xoopsUser) {
@@ -148,9 +148,9 @@ $class_id = get_my_class_id();
  }
 
 /*-----------秀出結果區--------------*/
-$xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign('bootstrap', get_bootstrap());
-$xoopsTpl->assign('jquery', get_jquery(true));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('bootstrap', Utility::get_bootstrap());
+$xoopsTpl->assign('jquery', Utility::get_jquery(true));
 
 $xoopsTpl->assign('data', $data);
 $xoopsTpl->assign('DEF_SET', $DEF_SET);

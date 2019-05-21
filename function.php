@@ -4,11 +4,6 @@
 // 製作日期：2014-02-16
 // $Id:$
 // ------------------------------------------------------------------------- //
-//引入TadTools的函式庫
-if (!file_exists(XOOPS_ROOT_PATH.'/modules/tadtools/tad_function.php')) {
-    redirect_header('http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50', 3, _TAD_NEED_TADTOOLS);
-}
-include_once XOOPS_ROOT_PATH.'/modules/tadtools/tad_function.php';
 
 //需要單位名稱模組(e_stud_import)1.9
 if (!file_exists(XOOPS_ROOT_PATH.'/modules/e_stud_import/es_comm_function.php')) {
@@ -342,7 +337,7 @@ function get_sign_data($kind_id, $class_id)
                 $show_data .= '<span class=\'label label-default\'>'.$fv.'</span>';
             }
         }
- 
+
             $row['get_hide'] = "<span class='label label-danger del'><span class='fa fa-remove' title='刪除'></span></span>
                 $show_data
                 <input type='hidden' name='get_data[".$row['order_pos']."]'  id='get_data_".$row['order_pos']."' value='".$row['data_get']."'  > ";
