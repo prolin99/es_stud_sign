@@ -138,7 +138,7 @@ if ($_GET['mid']) {
 
     //header('Content-Type: application/vnd.ms-excel');
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename=after'.date('mdHi').'.xlsx');
+    header('Content-Disposition: attachment;filename=sign'.date('mdHi').'.xlsx');
     header('Cache-Control: max-age=0');
 
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');

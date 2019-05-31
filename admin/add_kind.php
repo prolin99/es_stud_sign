@@ -54,7 +54,7 @@ if ($_POST['ADD']) {
     }
 
     $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
-    redirect_header('index.php', 3, '新增一筆報名表....');
+    redirect_header('main.php', 3, '新增一筆報名表....');
 }
 
 if ($_POST['templ']) {
@@ -88,13 +88,13 @@ if ($_POST['templ']) {
 //刪除這個報名
 if ($_POST['btn_del'] == 'del') {
     delete_sign_kind($_POST['okind_id']);
-    redirect_header('index.php', 3, '刪除一筆報名表....');
+    redirect_header('main.php', 3, '刪除一筆報名表....');
 }
 
 //清空報名資料
 if ($_POST['btn_clear'] == 'clear') {
     clear_sign_kind($_POST['okind_id']);
-    redirect_header('index.php', 3, '清空報名表....');
+    redirect_header('main.php', 3, '清空報名表....');
 }
 
 if ($_GET['do'] == 'edit' and $_GET['id']) {
@@ -104,7 +104,7 @@ if ($_GET['do'] == 'edit' and $_GET['id']) {
     $uid = $xoopsUser->uid();
 
     if (($data['edit_kind'][$_GET['id']]['uid'] != $uid) and  !in_array(1, $xoopsUser->groups())) {
-        redirect_header('index.php', 3, '沒有權限修這張報名表....');
+        redirect_header('main.php', 3, '沒有權限修這張報名表....');
     }
 }
 
