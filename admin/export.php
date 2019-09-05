@@ -28,6 +28,7 @@ if ($_GET['mid']) {
     //取得報名學生資料
     $sign_studs = get_sign_data($mid, 'all');
     //var_dump($sign_studs) ;
+    //die() ;
 
     $objPHPExcel = new PHPExcel();
     $objPHPExcel->setActiveSheetIndex(0);  //設定預設顯示的工作表
@@ -94,14 +95,15 @@ if ($_GET['mid']) {
                     //日期格式
                     if ($v == 'birthday') {
                         $b_date = preg_split("/[-\/]/", $stud['get_field_2'][$v]);
-                        $my_data = "=date({$b_date[0]}, {$b_date[1]}, {$b_date[2]}) ";
+                        $my_data = new DateTime("{$b_date[0]}-{$b_date[1]}-{$b_date[2]}" );
+                        //$my_data = "{$b_date[0]}-{$b_date[1]}-{$b_date[2]}";
                         $objPHPExcel->setActiveSheetIndex(0)
                             ->getStyle($col_str)
                             ->getNumberFormat()
-                            ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD);
-                    }
-
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str, $my_data);
+                            ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str, PHPExcel_Shared_Date::PHPToExcel($my_data )  );
+                    }else
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str, $my_data);
             }
 
             //輸入欄位
