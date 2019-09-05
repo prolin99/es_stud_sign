@@ -12,7 +12,7 @@ if (!file_exists(XOOPS_ROOT_PATH.'/modules/e_stud_import/es_comm_function.php'))
 include_once XOOPS_ROOT_PATH.'/modules/e_stud_import/es_comm_function.php';
 
 /********************* 自訂函數 *********************/
-$DEF_SET['export'] = array('person_id' => '身份證','sex' => '性別','birthday' => '生日' ,'class_sit_num' => '座號' ,'parent' => '監護人');
+$DEF_SET['export'] = array('person_id' => '身份證','sex' => '性別','birthday' => '生日' ,'class_sit_num' => '座號' ,'parent' => '監護人', 'tn_id' =>'學號(索引)');
 //取得預設值
 $DEF_SET['fields'] = $xoopsModuleConfig['es_ss_field_num'] + 1;
 
@@ -324,9 +324,9 @@ function get_sign_data($kind_id, $class_id)
                 $row['in_'.$fn] = $fv;
             }
         }
-            //擷取欄   birthday,class_sit_num, 以逗號作分隔的資料欄名
-            $show_data = '';
-        $get_stud_data = '';
+        //擷取欄   birthday,class_sit_num, 以逗號作分隔的資料欄名
+        $show_data = '';
+        $get_stud_data =[];
 
         $fi = preg_split('/,/', $row['data_get']);
 
@@ -338,13 +338,14 @@ function get_sign_data($kind_id, $class_id)
             }
         }
 
-            $row['get_hide'] = "<span class='label label-danger del'><span class='fa fa-remove' title='刪除'></span></span>
+        $row['get_hide'] = "<span class='label label-danger del'><span class='fa fa-remove' title='刪除'></span></span>
                 $show_data
                 <input type='hidden' name='get_data[".$row['order_pos']."]'  id='get_data_".$row['order_pos']."' value='".$row['data_get']."'  > ";
 
-        $row['get_field_2'] = $get_stud_data;
+            $row['get_field_2'] = $get_stud_data;
             //$data[$row['class_id']][$row['order_pos']] = $row ;
             $data[$row['class_id']][$row['order_pos']] = $row;
+
     }
 
     return $data;
