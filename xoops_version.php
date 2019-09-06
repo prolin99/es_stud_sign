@@ -8,7 +8,7 @@
 //---基本設定---//
 
 $modversion['name'] = '班級報名';                //模組名稱
-$modversion['version'] = '1.51';                //模組版次
+$modversion['version'] = '1.6';                //模組版次
 $modversion['author'] = 'prolin(prolin@tn.edu.tw)';        //模組作者
 $modversion['description'] = '以班級為單位報名';            //模組說明
 $modversion['credits'] = 'prolin';                //模組授權者
@@ -32,6 +32,7 @@ $modversion['system_menu'] = 1;//---資料表架構---//
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 $modversion['tables'][1] = 'sign_kind';
 $modversion['tables'][2] = 'sign_data';
+$modversion['tables'][3] = 'sign_manager';
 
 //---管理介面設定---//
 $modversion['hasAdmin'] = 1;
@@ -40,6 +41,10 @@ $modversion['adminmenu'] = 'admin/menu.php';
 
 //---使用者主選單設定---//
 $modversion['hasMain'] = 1;
+
+//---安裝設定---//
+$modversion['onUpdate'] = "include/onUpdate.php";
+
 
 //---樣板設定---要有指定，才會編譯動作，//
 $modversion['templates'] = array();
@@ -57,6 +62,9 @@ $modversion['templates'][$i]['description'] = 'esss_index_add_tpl.html';
 $modversion['templates'][$i]['file'] = 'esss_index_adm_tpl.html';
 $modversion['templates'][$i]['description'] = 'esss_index_adm_tpl.html';
 
+++$i;
+$modversion['templates'][$i]['file'] = 'esss_adm_manager_tpl.html';
+$modversion['templates'][$i]['description'] = 'esss_adm_manager_tpl.html';
 
 
 $i = 0;

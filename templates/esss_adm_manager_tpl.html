@@ -1,0 +1,17 @@
+<h1>班級填報人管理</h1>
+<p>除導級導師外的填報人，才需要建置資料，一人可以填報多班。</p>
+</br>
+<form action ="manager.php" enctype='multipart/form-data' method=post >
+       <fieldset>
+       <label>上傳  XLSX (excel2007)檔案:</label>
+       <input type=file name=userdata accept=".xlsx">
+       <input type='hidden' name='op' value='import'> <br /> <br />
+       <button type='submit'  name='do_key' class='btn btn-primary'>同步</button>(名冊資料庫會先全部清除！)
+       <button type='submit'  name='do_download' class='btn btn-primary'>匯出名冊</button>
+       </fieldset>
+       </form>
+
+
+
+       Excel 匯入格式：</br>
+       負責的班級代號,填報人完整eamil , 填報人姓名

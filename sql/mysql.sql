@@ -25,3 +25,10 @@ CREATE TABLE `sign_data` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `myindex` (`class_id`,`kind`,`order_pos`)
 ) ENGINE=MyISAM    COMMENT='校園報名資料';
+
+CREATE TABLE `sign_manager` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `class_id` varchar(10) NOT NULL,
+  `user_email` varchar(80) NOT NULL,
+  `user_name` varchar(80) DEFAULT  NULL
+) ENGINE=MyISAM    COMMENT='校園報名班級管理者';
