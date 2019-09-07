@@ -23,7 +23,7 @@ $adminmenu[$i]['desc'] = '增修報名表';
 $adminmenu[$i]['icon'] = 'images/admin/logadm.png';
 
 ++$i;
-$adminmenu[$i]['title'] = '填報者管理';
+$adminmenu[$i]['title'] = '班級填報人管理';
 $adminmenu[$i]['link'] = 'admin/manager.php';
 $adminmenu[$i]['desc'] = '額外的班級填報人';
 $adminmenu[$i]['icon'] = 'images/admin/main.png';

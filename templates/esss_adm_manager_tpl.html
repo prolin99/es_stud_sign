@@ -1,17 +1,26 @@
 <h1>班級填報人管理</h1>
-<p>除導級導師外的填報人，才需要建置資料，一人可以填報多班。</p>
+<p>除導級導師外的填報人，才需要建置資料，以 EMAIL 做判斷依據。同一班可指定多人填報權。</p>
 </br>
+<div>
+<a href='manager_sample.xlsx' target='_blank' class='btn btn-info'>下載 EXCEL 範例匯入格式檔</a><br/>
+</div>
+
+<h3>匯入班級填報人名冊</h3>
 <form action ="manager.php" enctype='multipart/form-data' method=post >
        <fieldset>
        <label>上傳  XLSX (excel2007)檔案:</label>
        <input type=file name=userdata accept=".xlsx">
        <input type='hidden' name='op' value='import'> <br /> <br />
-       <button type='submit'  name='do_key' class='btn btn-primary'>同步</button>(名冊資料庫會先全部清除！)
-       <button type='submit'  name='do_download' class='btn btn-primary'>匯出名冊</button>
+       <button type='submit'  name='do_key' value='update'  class='btn btn-primary'>同步</button>(名冊資料庫會先全部清除！)
+       <a class="btn btn-success"  href="export_manager.php" >匯出班級填報人 EXCEL </a>
+
        </fieldset>
-       </form>
+</form>
 
-
-
-       Excel 匯入格式：</br>
-       負責的班級代號,填報人完整eamil , 填報人姓名
+<h3>目前班級填報人名冊</h3>
+<table>
+    <tr><th>班級代號</th><th>email</th><th>姓名</th></tr>
+<{foreach  key=key item=list   from= $data }>
+<tr><td><{$list.class_id}></td><td><{$list.user_email}></td><td><{$list.user_name}></td></tr>
+<{/foreach}>
+</table>

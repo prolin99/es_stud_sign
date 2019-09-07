@@ -16,7 +16,7 @@ include_once XOOPS_ROOT_PATH.'/header.php';
      redirect_header(XOOPS_URL, 3, '需要登入，才能使用！');
  }
 
-// $xoopsUser->email();
+
 
 /*-----------function區--------------*/
 
@@ -92,6 +92,10 @@ if ($_POST['Submit_emp'] == 'empt') {
 /*-----------執行動作判斷區----------*/
 //取得任教班級
 $class_id = get_my_class_id();
+//var_dump($class_id) ;
+//echo  $xoopsUser->email();
+
+
 //echo 'clllllll--'  . $class_id ;
  if ($_GET['id']) {
      $id = intval($_GET['id']);
@@ -121,18 +125,20 @@ $class_id = get_my_class_id();
         }
     } else {
 
-    //判別是否在填報年級
-    $grade = substr($class_id, 0, 1);
+          //判別是否在填報年級
+          $grade = substr($class_id, 0, 1);
 
-        if (!$class_id) {
-            redirect_header('index.php', 3, '非級任，無法填報');
-        }
+            if (!$class_id) {
+                redirect_header('index.php', 3, '無負責的班級，無法填報');
+            }
 
-        if (!in_array($grade, $data['kind_in'][$id]['grade'])) {
-            redirect_header('index.php', 3, '貴班無需填報');
-        }
-        $xoopsTpl->assign('no_bootstrap_v2', $_SESSION['bootstrap'] >= 3);
+            if (!in_array($grade, $data['kind_in'][$id]['grade'])) {
+                redirect_header('index.php', 3, '貴班無需填報');
+            }
+
     }
+
+    $xoopsTpl->assign('no_bootstrap_v2', $_SESSION['bootstrap'] >= 3);
 
     //取得現在班級姓名
     $data['class_stud'] = get_class_students($class_id);

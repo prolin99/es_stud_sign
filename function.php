@@ -116,6 +116,19 @@ function get_my_class_id($uid = 0)
         $class_id = $data_row['class_id'];
     }
 
+
+        //使用 email 再次 查看
+        $email = trim($xoopsUser->email() ) ;
+        $sql = '  SELECT  class_id  FROM '.$xoopsDB->prefix('sign_manager').
+                       " where user_email= '$email' ";
+ 
+        $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
+        while ($data_row = $xoopsDB->fetchArray($result)) {
+            $class_id = $data_row['class_id'];
+        }
+
+
+    //$xoopsUser->email();
     return $class_id;
 }
 

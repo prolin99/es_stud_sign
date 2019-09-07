@@ -21,10 +21,13 @@ include_once '../function.php';
 
 
 /*-----------執行動作判斷區----------*/
-
+//匯入更新
+if ($_POST['do_key']) {
+    import_data() ;
+}
 
 //匯入判別
-function import_stud(){
+function import_data(){
 	if ($_FILES['userdata']['name'] ) {
 
 		$file_up = XOOPS_ROOT_PATH."/uploads/" .$_FILES['userdata']['name'] ;
@@ -49,7 +52,7 @@ function import_stud(){
 function import_excel($file_up,$ver=2007) {
     global $xoopsDB,$c_year ,$xoopsTpl ,$message ;
 
-    $dn_list = stud_dn_list() ;
+
 
 	//清空學資料庫
 	$sql= "TRUNCATE TABLE   " . $xoopsDB->prefix("sign_manager")  ;
@@ -70,39 +73,40 @@ function import_excel($file_up,$ver=2007) {
 		$v=array();
 		//讀取一列中的每一格
 		for ($col = 0; $col <= 2; $col++) {
-
-
-			if(!get_magic_quotes_runtime()) {
-				$v[$col]=addSlashes($val);
-			}else{
-				$v[$col]= $val ;
-			}
-
+			$val =  $sheet->getCellByColumnAndRow($col, $row)->getCalculatedValue();
+            if (!get_magic_quotes_runtime()) {
+                $v[$col]=trim(addSlashes($val));
+            } else {
+                $v[$col]= trim($val) ;
+            }
 		}
 
 		if ($v[0]){
-			$class_id  = $v[0] ;  //班級
-            $email=$v[1] ;
-            $name=$v[2] ;
-
            $sql=  "INSERT INTO " . $xoopsDB->prefix("sign_manager") .
     			           "  (`id`, `class_id`, `user_email`, `user_name` )
-    			            VALUES ('0' , '{$v[0]}' , '{$v[1]}' , '{$v[2]}'    " ;
+    			            VALUES ('0' , '{$v[0]}' , '{$v[1]}' , '{$v[2]}'  )  " ;
 
-
-            //echo "$sql <br>" ;
-			$result = $xoopsDB->query($sql) ;
-            if ($xoopsDB->error() ) {
-                 echo  $xoopsDB->error() . $sql ."<br />" ;
-            }
+			$result = $xoopsDB->query($sql)  or      $message .= "語法錯誤：$sql <br/>" ;
+			 //echo $sql ."<br>" ;
+			 $update_ok_num ++ ;
 		}
 	}
 
 
 }
 
+$sql=  " SELECT * FROM " . $xoopsDB->prefix("sign_manager") . " order by class_id , user_email  "  ;
+$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, $xoopsDB->error());
+while($row=$xoopsDB->fetchArray($result)){
+	$r= array() ;
+	 $r['class_id']= $row['class_id'] ;
+	 $r['user_email']= $row['user_email'] ;
+	 $r['user_name']= $row['user_name'] ;
+	 $data[]=$r ;
+}
+
 /*-----------秀出結果區--------------*/
-//$xoopsTpl->assign('data', $data);
-//$xoopsTpl->assign('system_admin', $system_admin);
+$xoopsTpl->assign('data', $data);
+$xoopsTpl->assign('message', $message);
 
 include_once 'footer.php';
