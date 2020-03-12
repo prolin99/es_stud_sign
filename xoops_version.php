@@ -8,7 +8,7 @@
 //---基本設定---//
 
 $modversion['name'] = '班級報名';                //模組名稱
-$modversion['version'] = '1.6';                //模組版次
+$modversion['version'] = '1.61';                //模組版次
 $modversion['author'] = 'prolin(prolin@tn.edu.tw)';        //模組作者
 $modversion['description'] = '以班級為單位報名';            //模組說明
 $modversion['credits'] = 'prolin';                //模組授權者
@@ -19,7 +19,7 @@ $modversion['dirname'] = basename(dirname(__FILE__));        //模組目錄名�
 
 //---模組狀態資訊---//
 
-$modversion['release_date'] = '2019-01-08';
+$modversion['release_date'] = '2019-03-12';
 $modversion['module_website_url'] = 'https://github.com/prolin99/es_stud_sign';
 $modversion['module_website_name'] = 'prolin';
 $modversion['module_status'] = 'release';

@@ -95,13 +95,21 @@ if ($_GET['mid']) {
                     //日期格式
                     if ($v == 'birthday') {
                         $b_date = preg_split("/[-\/]/", $stud['get_field_2'][$v]);
-                        $my_data = new DateTime("{$b_date[0]}-{$b_date[1]}-{$b_date[2]}" );
+                        //var_dump($b_date) ;
+
+                        $my_data = "=date({$b_date[0]}, {$b_date[1]}, {$b_date[2]}) ";
+                        //die($my_data) ;
+                        //$my_data = new DateTime("{$b_date[0]}/{$b_date[1]}/{$b_date[2]}" );
                         //$my_data = "{$b_date[0]}-{$b_date[1]}-{$b_date[2]}";
+
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str, $my_data);
+
                         $objPHPExcel->setActiveSheetIndex(0)
                             ->getStyle($col_str)
                             ->getNumberFormat()
                             ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2);
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str, PHPExcel_Shared_Date::PHPToExcel($my_data )  );
+                        //$objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str, PHPExcel_Shared_Date::PHPToExcel($my_data )  );
+
                     }else
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue($col_str, $my_data);
             }
@@ -118,7 +126,7 @@ if ($_GET['mid']) {
                         $objPHPExcel->setActiveSheetIndex(0)
                             ->getStyle($col_str)
                             ->getNumberFormat()
-                            ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD);
+                            ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2);
                     }
 
                 if ($v[2] == 'o') {    //選項
