@@ -8,7 +8,7 @@
 //---基本設定---//
 
 $modversion['name'] = '班級報名';                //模組名稱
-$modversion['version'] = '1.61';                //模組版次
+$modversion['version'] = '1.7';                //模組版次
 $modversion['author'] = 'prolin(prolin@tn.edu.tw)';        //模組作者
 $modversion['description'] = '以班級為單位報名';            //模組說明
 $modversion['credits'] = 'prolin';                //模組授權者
@@ -65,6 +65,15 @@ $modversion['templates'][$i]['description'] = 'esss_index_adm_tpl.html';
 ++$i;
 $modversion['templates'][$i]['file'] = 'esss_adm_manager_tpl.html';
 $modversion['templates'][$i]['description'] = 'esss_adm_manager_tpl.html';
+
+//---區塊設定---//
+$modversion['blocks'][] = [
+    'file' => 'action_list.php',
+    'name' => _MI_Es_stud_sign_ACTION_LIST_NAME,
+    'description' => _MI_Es_stud_sign_ACTION_LIST_DESCRIPTION,
+    'show_func' => 'action_list',
+    'template' => 'esss_action_list.tpl',
+];
 
 
 $i = 0;
