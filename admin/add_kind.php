@@ -20,8 +20,8 @@ include_once '../function.php';
 //新建一期
 if ($_POST['ADD']) {
     $myts = &MyTextSanitizer::getInstance();
-    $title = trim($myts->addSlashes($_POST['doc_title']));
-    $doc = trim($myts->addSlashes($_POST['txtDoc']));
+    $title = trim($xoopsDB->escape($_POST['doc_title']));
+    $doc = trim($xoopsDB->escape($_POST['txtDoc']));
     $beg_date = $_POST['beg_date'];
     $end_date = $_POST['end_date'];
     foreach ($_POST['grade'] as $k => $v) {
@@ -65,8 +65,8 @@ if ($_POST['templ']) {
 
     //取得舊資料
     $myts = &MyTextSanitizer::getInstance();
-    $title = $myts->addSlashes($_POST['doc_title']);
-    $doc = $myts->addSlashes($row['doc']);
+    $title = $xoopsDB->escape($_POST['doc_title']);
+    $doc = $xoopsDB->escape($row['doc']);
     $beg_date = $_POST['beg_date'];
     $end_date = $_POST['end_date'];
 
