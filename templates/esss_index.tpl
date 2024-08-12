@@ -10,11 +10,11 @@
       <{if ($data.admin) }>
         <form action="index.php?id=<{$sign.id }>" method="post">
           <div class='row'>
-            <span class='col-3'>班級：</span>
-            <span class='col-5'>
+            <span class='col-2 col-md-2 '>班級：</span>
+            <span class='col-4 col-md-4'>
               <{html_options name="admin_class_id" class="form-control" options=$data.class_list_c selected=$data.sel_class onchange="submit();" }>
             </span>
-            <span class="alert alert-danger  col-4">管理員權限!!!!</span>
+            <span class="alert alert-danger  col-3 col-md-3">管理員權限!!!!</span>
           </div>
         </form>
       <{else}>
@@ -35,10 +35,10 @@
                   <div class="alert alert-success">
                     <div>快速輸入區(空白做分隔)，移開後會自動擷取資料，但還未完成報名。</div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-6 col-md-6">
                           <input type="text" class="form-control"   id="q_input" placeholder="輸入學生座號，多人時以空白分隔" data="<{$sign.get_data_item}>" title='有修改，移開後會自動擷取資料。'>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6  col-md-6">
                           <span class="btn btn-primary">取資料</span>
                           <span class='btn btn-success' onclick='javascript:input_all();' id="btn_all" data="<{$sign.get_data_item}>" title='把全班的學生座號全部填報，用於全體調查表'>全班都填</span>
                         </div>
@@ -48,27 +48,27 @@
                     <!--    輸入欄          -->
                   <h5>正取資料輸入(直接輸入座號，自動轉換姓名)</h5>
                     <div class="row">
-                      <span class="basge badge-info col-4"> 順序. 座號</span>
+                      <span class="basge badge-info col-4  col-md-4"> 順序. 座號</span>
                       <{foreach key=key item=fi from=$sign.field_input }>
-                      <span class="basge badge-info  col-<{$fi[3]}>">
+                      <span class="basge badge-info  col-<{$fi[3]}>  col-md-<{$fi[3]}>">
                           <{$fi[1]}>
                       </span>
                         <{/foreach}>
-                      <span class="basge badge-info col-4">匯出資料欄</span>
+                      <span class="basge badge-info col-4  col-md-4">匯出資料欄</span>
                     </div>
 
 
                     <{section name=ti start=0 loop=$sign.stud_get step=1 }>
 
                       <div class="row" ord_id="<{$i}>">
-                        <span class="col-4">
+                        <span class="col-4 col-md-4">
                           <input class="form-control sitid"  id="sitid_<{$i}>" name="num_id[<{$i}>]" value="<{$data.my_class[$data.sel_class][$i].stud_name }>" type="text" title="<{$i}>.座號才能擷取出資料" placeholder="<{$i}>.座號或姓名" data="<{$sign.get_data_item}>">
                         </span>
                         <!--     需輸入欄         -->
                         <{foreach key=key item=fi from=$sign.field_input }>
                           <{if ($fi[2]=='d' ) }>
                             <!--     日期       -->
-                            <span class=" col-<{$fi[3]}>">
+                            <span class=" col-<{$fi[3]}> col-md-<{$fi[3]}>">
                               <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>"
                               <{if $data.my_class[$data.sel_class][$i].stud_name }>
                               <{assign var="bar" value="in_$fi[0]" }>
@@ -80,7 +80,7 @@
                             </span>
                           <{elseif ($fi[2]=='o' ) }>
                               <!--     下拉       -->
-                              <span class="col-<{$fi[3]}>  ">
+                              <span class="col-<{$fi[3]}>  col-md-<{$fi[3]}> ">
                                 <{if $data.my_class[$data.sel_class][$i].stud_name }>
                                   <{assign var="bar" value="in_$fi[0]" }>
                                   <{assign var="my_selected" value=$data.my_class[$data.sel_class][$i][$bar] }>
@@ -90,7 +90,7 @@
                                 <{html_options name="in_$fi[0][$i]" options=$fi[5] selected=$my_selected class="form-control self_input" }>
                               </span>
                          <{else}>
-                                <span class="col-<{$fi[3]}>">
+                                <span class="col-<{$fi[3]}> col-md-<{$fi[3]}>">
                                   <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>"
                                   <{if ($data.my_class[$data.sel_class][$i].stud_name) }>
                                     <{assign var="bar" value="in_$fi[0]" }>
@@ -103,7 +103,7 @@
                          <{/if}>
                         <{/foreach}>
                                     <!--     擷取欄         -->
-                        <span class="col-4" id="get_<{$i}>">
+                        <span class="col-4 col-md-4" id="get_<{$i}>">
                               <{$data.my_class[$data.sel_class][$i].get_hide }>
                         </span>
 
@@ -118,14 +118,14 @@
 
                             <div class="row" ord_id="<{$i}>">
 
-                              <span class="col-4">
+                              <span class="col-4 col-md-4">
                                 <input class="form-control sitid" id="sitid_<{$i}>" name="num_id[<{$i}>]" value="<{$data.my_class[$data.sel_class][$i].stud_name }>" type="text" title="<{$i}>.座號才能擷取出資料" placeholder="<{$i}>.座號或姓名" data="<{$sign.get_data_item}>">
                               </span>
                               <!--     需輸入欄(由報名報)         -->
                               <{foreach key=key item=fi from=$sign.field_input }>
                                 <{if ($fi[2]=='d' ) }>
                                   <!--     日期欄         -->
-                                  <span class="col-<{$fi[3]}>">
+                                  <span class="col-<{$fi[3]}> col-md-<{$fi[3]}>">
                                     <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>"
                                     <{if $data.my_class[$data.sel_class][$i].stud_name }>
                                       <{assign var="bar" value="in_$fi[0]" }>
@@ -142,12 +142,12 @@
                                           <{else}>
                                             <{assign var="my_selected" value=0 }>
                                               <{/if}>
-                                                <span class="col-<{$fi[3]}>">
+                                                <span class="col-<{$fi[3]}> col-md-<{$fi[3]}>">
                                                   <{html_options name="in_$fi[0][$i]" options=$fi[5] selected=$my_selected class="form-control self_input" }>
                                                 </span>
 
                                                 <{else}>
-                                                  <span class="col-<{$fi[3]}>">
+                                                  <span class="col-<{$fi[3]}>  col-md-<{$fi[3]}>">
                                                     <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>" <{if $data.my_class[$data.sel_class][$i].stud_name }>
                                                     <{assign var="bar" value="in_$fi[0]" }>
                                                       value="<{$data.my_class[$data.sel_class][$i][$bar] }>"
@@ -159,7 +159,7 @@
                                                   <{/if}>
                                                     <{/foreach}>
                                                       <!--     擷取欄         -->
-                                                      <span class="col-4" id="get_<{$i}>">
+                                                      <span class="col-4 col-md-4" id="get_<{$i}>">
                                                         <{$data.my_class[$data.sel_class][$i].get_hide }>
                                                       </span>
 
@@ -310,7 +310,7 @@
                         <{if ($sign.cando) }>
 
 
-                            <span class=" col-1">
+                            <span class=" col-1 col-md-1">
                               <{if ($sign.need) }>
                                 <{if ($sign.inputed) }>
                                   <a class="btn btn-info" href="index.php?id=<{$sign.id}>" title="已填寫過，再次修正！">修改</a>
@@ -325,12 +325,12 @@
 
                             <{else }>
 
-                                <span class=" col-1">
+                                <span class=" col-1 col-md-1">
                                   <span class="basge badge-dark ">過期</span>
                                 </span>
                                 <{/if}>
 
-                                  <span class="col-5">
+                                  <span class="col-5 col-md-5">
                                     <div class="alert alert-info">
                                       <span class="badge badge-info">
                                         <{$sign.id}>
@@ -341,11 +341,11 @@
                                       <{$sign.doc|nl2br}>
                                     </div>
                                   </span>
-                                  <span class=" col-2">
+                                  <span class=" col-2 col-md-2">
                                     <{$sign.admin}>
 
                                   </span>
-                                  <span class="col-3">
+                                  <span class="col-3 col-md-3">
                                   <{if ($sign.d_days>0) }>
                                     <span class="basge badge-info">還有
                                       <{$sign.d_days}> 天</span>
