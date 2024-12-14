@@ -3,7 +3,7 @@
   <{else}>
     <h3>管理報名表</h3>
     <{/if}>
-      <{$i++}>
+    <{assign var="i" value=1 }>
         <{foreach key=key item=sign from=$data.kind }>
           <{if ($sign.cando) }>
             <div class="row " oid="<{$sign.id}>">

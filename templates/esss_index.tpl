@@ -6,7 +6,7 @@
     <!--     輸入                          -->
     <{foreach key=key item=sign from=$data.kind_in }>
 
-      <!-- <{$i++}> -->
+      <{assign var="i" value=1 }>
       <{if ($data.admin) }>
         <form action="index.php?id=<{$sign.id }>" method="post">
           <div class='row'>
@@ -304,7 +304,7 @@
                 <{if (! $data.kind ) }>
                   <h1>還沒有報名表</h1>
                   <{/if}>
-                    <{$i++}>
+                    <{assign var="i" value=1 }>
                       <{foreach key=key item=sign from=$data.kind }>
                         <div class="row">
                         <{if ($sign.cando) }>
