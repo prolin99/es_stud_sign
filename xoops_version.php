@@ -9,7 +9,7 @@
 
 $modversion['name'] = '班級報名';                //模組名稱
 //$modversion['version'] = '1.71';                //模組版次
-$modversion['version'] = $_SESSION['xoops_version'] >= 20511 ? '1.8.0-Stable' : '1.8';
+$modversion['version'] = $_SESSION['xoops_version'] >= 20511 ? '1.9.0-Stable' : '1.9';
 $modversion['author'] = 'prolin(prolin@tn.edu.tw)';        //模組作者
 $modversion['description'] = '以班級為單位報名';            //模組說明
 $modversion['credits'] = 'prolin';                //模組授權者
