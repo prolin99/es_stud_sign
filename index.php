@@ -36,9 +36,10 @@ include_once XOOPS_ROOT_PATH.'/header.php';
      for ($k = 1; $k <= ($_POST['studs_get'] + $_POST['studs_more']); ++$k) {
          //正取、備取人數
         $v = $_POST['num_id'][$k];
+        //echo $v . '   .. '  . $k . '   .. '  . $_POST['num_id'][$k] .'<br>';
          if ($v) {
              //如果是座號(未轉換成姓名....等)
-            if ($v > 0) {
+            if (is_int($v)) {
                 $stud_get_array = get_student_data_array($_POST['now_class'], $v, 'ii_0', $_POST['get_data_item']);
                 $v = $stud_get_array['name'];
                 $_POST['get_data'][$k] = $stud_get_array['hide_data'];
@@ -53,7 +54,7 @@ include_once XOOPS_ROOT_PATH.'/header.php';
              }
             //檢查有無存在
             $sql = '	select id from  '.$xoopsDB->prefix('sign_data')." where kind = '{$_POST['now_kind']}'  and class_id = '{$_POST['now_class']}'  and  order_pos = '$k' ";
-             $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
+            $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
              while ($row = $xoopsDB->fetchArray($result)) {
                  $update_id = $row['id'];
              }
@@ -64,6 +65,7 @@ include_once XOOPS_ROOT_PATH.'/header.php';
                 $sql = '	INSERT INTO  '.$xoopsDB->prefix('sign_data')." (  `kind`, `order_pos`, `stud_name`, `data_get`, `data_input`, `class_id`)
 				VALUES ({$_POST['now_kind']},$k,'$v', '{$_POST['get_data'][$k]}'  ,'$input' , '{$_POST['now_class']}'   ) ";
              }
+             echo $sql.'<br>'; 
 
              $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
          } else {

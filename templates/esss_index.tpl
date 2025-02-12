@@ -71,7 +71,7 @@
                             <span class=" col-<{$fi[3]}> col-md-<{$fi[3]}>">
                               <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>"
                               <{if $data.my_class[$data.sel_class][$i].stud_name }>
-                              <{assign var="bar" value="in_$fi[0]" }>
+                              <{assign var="bar" value="in_<{$fi[0]}>" }>
                                 value="<{$data.my_class[$data.sel_class][$i][$bar] }>"
                               <{else}>
                                 value="<{$fi[4]}>"
@@ -82,7 +82,7 @@
                               <!--     下拉       -->
                               <span class="col-<{$fi[3]}>  col-md-<{$fi[3]}> ">
                                 <{if $data.my_class[$data.sel_class][$i].stud_name }>
-                                  <{assign var="bar" value="in_$fi[0]" }>
+                                  <{assign var="bar" value="in_<{$fi[0]}>" }>
                                   <{assign var="my_selected" value=$data.my_class[$data.sel_class][$i][$bar] }>
                                 <{else}>
                                   <{assign var="my_selected" value=0 }>
@@ -93,7 +93,7 @@
                                 <span class="col-<{$fi[3]}> col-md-<{$fi[3]}>">
                                   <input class="form-control self_input" dmode="<{$fi[2]}>" name="in_<{$fi[0]}>[<{$i}>]" type="text" title="<{$fi[1]}>" placeholder="<{$fi[1]}>"
                                   <{if ($data.my_class[$data.sel_class][$i].stud_name) }>
-                                    <{assign var="bar" value="in_$fi[0]" }>
+                                    <{assign var="bar" value="in_<{$fi[0]}>" }>
                                     value="<{$data.my_class[$data.sel_class][$i][$bar] }>"
                                   <{else}>
                                         value="<{$fi[4]}>"
