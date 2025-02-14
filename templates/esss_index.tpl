@@ -48,13 +48,13 @@
                     <!--    輸入欄          -->
                   <h5>正取資料輸入(直接輸入座號，自動轉換姓名)</h5>
                     <div class="row">
-                      <span class="basge badge-info col-4  col-md-4"> 順序. 座號</span>
+                      <span class="basge badge-info bg-info col-4  col-md-4"> 順序. 座號</span>
                       <{foreach key=key item=fi from=$sign.field_input }>
-                      <span class="basge badge-info  col-<{$fi[3]}>  col-md-<{$fi[3]}>">
+                      <span class="basge badge-info bg-info col-<{$fi[3]}>  col-md-<{$fi[3]}>">
                           <{$fi[1]}>
                       </span>
                         <{/foreach}>
-                      <span class="basge badge-info col-4  col-md-4">匯出資料欄</span>
+                      <span class="basge badge-info bg-info col-4  col-md-4">匯出資料欄</span>
                     </div>
 
 
@@ -319,20 +319,20 @@
                                     <a class="btn btn-success" href="index.php?id=<{$sign.id}>" title="第一次輸入！">報名</a>
                                 <{/if}>
                               <{else}>
-                                        <span class="basge badge-default" title="所在的年級無需填報">無需填報</span>
+                                        <span class="basge badge-default bg-secondary" title="所在的年級無需填報">無需填報</span>
                               <{/if}>
                             </span>
 
                             <{else }>
 
                                 <span class=" col-1 col-md-1">
-                                  <span class="basge badge-dark ">過期</span>
+                                  <span class="basge badge-dark bg-dark ">過期</span>
                                 </span>
                                 <{/if}>
 
                                   <span class="col-5 col-md-5">
                                     <div class="alert alert-info">
-                                      <span class="badge badge-info">
+                                      <span class="badge badge-info bg-info">
                                         <{$sign.id}>
                                       </span>
                                       <{$sign.title}>
@@ -347,7 +347,7 @@
                                   </span>
                                   <span class="col-3 col-md-3">
                                   <{if ($sign.d_days>0) }>
-                                    <span class="basge badge-info">還有
+                                    <span class="basge badge-info bg-info">還有
                                       <{$sign.d_days}> 天</span>
                                     <span> 填報年級：
                                       <{$sign.input_classY}>
