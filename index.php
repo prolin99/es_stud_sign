@@ -65,7 +65,7 @@ include_once XOOPS_ROOT_PATH.'/header.php';
                 $sql = '	INSERT INTO  '.$xoopsDB->prefix('sign_data')." (  `kind`, `order_pos`, `stud_name`, `data_get`, `data_input`, `class_id`)
 				VALUES ({$_POST['now_kind']},$k,'$v', '{$_POST['get_data'][$k]}'  ,'$input' , '{$_POST['now_class']}'   ) ";
              }
-             //echo $sql.'<br>'; 
+             echo $sql.'<br>'; 
 
              $result = $xoopsDB->query($sql) or die($sql.'<br>'.$xoopsDB->error());
          } else {

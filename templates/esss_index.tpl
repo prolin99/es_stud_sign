@@ -87,7 +87,7 @@
                                 <{else}>
                                   <{assign var="my_selected" value=0 }>
                                 <{/if}>
-                                <{html_options name="in_$fi[0][$i]" options=$fi[5] selected=$my_selected class="form-control self_input" }>
+                                <{html_options name="in_<{$fi[0]}>[<{$i}>]" options=$fi[5] selected=$my_selected class="form-control self_input" }>
                               </span>
                          <{else}>
                                 <span class="col-<{$fi[3]}> col-md-<{$fi[3]}>">
